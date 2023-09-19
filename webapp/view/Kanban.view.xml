@@ -1,0 +1,71 @@
+<mvc:View 
+	controllerName="com.blueboot.smartplanning.controller.Kanban" 
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:semantic="sap.f.semantic" 
+	xmlns:l="sap.ui.layout"
+	>
+
+	<semantic:SemanticPage id="page" 
+		headerPinnable="false" 
+		toggleHeaderOnTitleClick="false" 
+		showFooter="false" 
+		headerExpanded="true">
+		
+		<semantic:titleHeading>
+			<FlexBox alignItems="Center" justifyContent="Start">
+				<Button type="Up" iconFirst="true" iconDensityAware="true" press="onNavBack"/>
+				<Title 
+					class="sapUiTinyMarginBegin" 
+					text="{i18n>KanbanBoard}" 
+					visible='{= !${mGlobal>/SelectedKanbanBoard}}' 
+					level="H2"/>
+				<Title 
+					class="sapUiTinyMarginBegin" 
+					text="{mGlobal>/SelectedKanbanBoard/Name}" 
+					visible='{= !!${mGlobal>/SelectedKanbanBoard}}' 
+					level="H2"/>
+				<Button class="sapUiTinyMarginBegin" 
+					icon="sap-icon://drop-down-list" 
+					iconFirst="true" 
+					type="Transparent" 
+					iconDensityAware="true" 
+					press="onTiTleMenu"/>
+			</FlexBox>
+		</semantic:titleHeading>
+		
+		<semantic:titleCustomTextActions>
+			<MenuButton text="{i18n>Customize}"
+				enabled="{= !!${mGlobal>/ChangeAuth} }"
+				>
+				<menu>
+					<Menu>
+						<MenuItem text="{i18n>CustomizeStatuses}" 
+							press="onColorSettings" 
+							visible="false"/>
+						<MenuItem text="{i18n>CustomizeGroups}"
+							press="onGroupsSettings" />
+					</Menu>
+				</menu>
+			</MenuButton>
+		</semantic:titleCustomTextActions>
+		
+		<semantic:messagesIndicator>
+			<semantic:MessagesIndicator id="MessagesIndicator" press="toggleMessagePopover" visible="{= ${message>/}.length > 0 }"/>
+		</semantic:messagesIndicator>
+
+		<semantic:content>
+			<l:VerticalLayout height="5rem">
+				<MessageStrip
+					text="{i18n>SelectKanbanBoard}"
+					type="Warning"
+					showIcon="true"
+					class="sapUiMediumMarginBottom"
+					visible='{= !${mGlobal>/SelectedKanbanBoard}}'>
+				</MessageStrip>
+				<l:HorizontalLayout id='PannelContainer' visible='{= !!${mGlobal>/SelectedKanbanBoard}}'/>
+			</l:VerticalLayout>
+		</semantic:content>
+	</semantic:SemanticPage>
+</mvc:View>

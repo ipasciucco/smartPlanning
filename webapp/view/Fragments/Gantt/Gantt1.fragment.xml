@@ -1,0 +1,334 @@
+<core:FragmentDefinition 
+	controllerName="com.blueboot.smartplanning.controller.Gantt" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	displayBlock="true"
+	xmlns:semantic="sap.f.semantic" 
+	xmlns="sap.ui.table"
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:gnt="sap.gantt"
+	xmlns:gnt-def="sap.gantt.def"
+	xmlns:gnt-pattern="sap.gantt.def.pattern"
+	xmlns:cal="sap.gantt.def.cal"
+	xmlns:axistime="sap.gantt.axistime"
+	xmlns:config="sap.gantt.config"
+	xmlns:shapes="sap.gantt.simple.shapes"
+	xmlns:gnt2="sap.gantt.simple"
+	xmlns:l="sap.ui.layout"
+	xmlns:CustomControls="com.blueboot.smartplanning.controls"
+	
+	>
+	
+	<gnt2:GanttChartWithTable id="gantt1" ghostAlignment="Start" enableSelectAndDrag="false"
+		shapeDoubleClick="onShapeDoubleClick"
+		shapeResize="onShapeResize"
+		shapeDrop="onShapeDrop"
+		shapeConnect="onShapeConnect"
+		shapeContextMenu="onShapeContextMenu"
+		shapeOverRelationship="false"
+		shapePress="onShapePress"
+		shapeSelectionMode="MultiWithKeyboardAndLasso"
+		isConnectorDetailsVisible="true"
+		shapeConnectorList="onShapeConnectorList"
+		>
+		
+		<gnt2:axisTimeStrategy>
+			<axistime:StepwiseZoomStrategy id="zoomStrategy"  zoomLevels="4">
+				<axistime:totalHorizon>
+					<config:TimeHorizon startTime="{mGlobal>/TotalHorizonStartDate}" endTime="{mGlobal>/TotalHorizonEndDate}"/>
+				</axistime:totalHorizon>
+				<axistime:visibleHorizon>
+					<config:TimeHorizon startTime="{mGlobal>/VisibleHorizonStartDate}" endTime="{mGlobal>/VisibleHorizonEndDate}"/>
+				</axistime:visibleHorizon>
+			</axistime:StepwiseZoomStrategy>
+		</gnt2:axisTimeStrategy>
+
+		<gnt2:table>
+			<TreeTable
+
+				id="treeTableGantt1"
+				selectionMode="MultiToggle"
+				visibleRowCountMode="Auto"
+				minAutoRowCount="1"
+				selectionBehavior="Row"
+				rows="{
+					path: 'mGlobal>/OrdersGantt',
+					parameters: {
+						operationMode: 'Server',
+						numberOfExpandedLevels: 2,
+						treeAnnotationProperties: {
+							hierarchyNodeFor: 'ObjectID',
+							hierarchyParentNodeFor: 'ParentObjectID',
+							hierarchyLevelFor: 'HierarchyNodeLevel',
+							hierarchyDrillStateFor: 'DrillDownState',
+							hierarchyNodeDescendantCountFor: 'Magnitude'
+						},
+						expand: 'Operations'
+					}
+				}"
+				rowHeight = "40"
+				>
+				
+				<columns>
+					
+					<Column 
+						width="15.5rem"
+						name="{i18n>Object}"
+						id="GanttCol_ID"
+						>
+						<customData>
+							<core:CustomData key="exportTableColumnConfig"
+								value='{"columnKey": "ShortText",
+								"leadingProperty":"ShortText",
+								"dataType": "string",
+								"hierarchyNodeLevel": "HierarchyNodeLevel",
+								"wrap": true}' />
+						</customData>
+						<m:Label text="{i18n>Object}"/>
+						<template>
+							<m:VBox>
+								<CustomControls:Link text="{mGlobal>ID}" emphasized="true" press="onGoToObject" rightPress='onPressOrder' />
+							</m:VBox>
+						</template>
+					</Column>
+					
+					<Column 
+						width="15rem"
+						name="{i18n>SHORT_TEXT}"
+						id="GanttCol_ShortText"
+						>
+						<m:Label text="{i18n>SHORT_TEXT}"/>
+						<template>
+							<m:Text text="{mGlobal>ShortText}" wrapping="false" />
+						</template>
+					</Column>
+					
+					<Column 
+						width="6rem"
+						name="{i18n>WORK_CENTER}"
+						id="GanttCol_WorkCntr"
+						>
+						<m:Label text="{i18n>WORK_CENTER}"/>
+						<template>
+							<m:Text text="{mGlobal>WorkCntr}" />
+						</template>
+					</Column>
+					
+					<Column 
+						width="4rem"
+						name="{i18n>Work}"
+						id="GanttCol_Work"
+						>
+						<m:Label text="{i18n>Work}"/>
+						<template>
+							<m:Text text="{ 
+						        parts: [ { path: 'mGlobal>Work' }, { path: 'mGlobal>UnWork' } ],
+						        type: 'sap.ui.model.type.Unit',
+						        formatOptions: {
+						        	preserveDecimals: false,
+								    decimals: '1',
+					        		constraints: { decimals: 1 }
+					    		} }" />
+						</template>
+					</Column>
+					
+					<Column 
+						width="4rem"
+						name="{i18n>REMWORK}"
+						id="GanttCol_RemWork"
+						>
+						<m:Label text="{i18n>REMWORK}"/>
+						<template>
+							<m:Text text="{ 
+						        parts: [ { path: 'mGlobal>RemWork' }, { path: 'mGlobal>UnWork' }],
+						        type: 'sap.ui.model.type.Unit',
+						        formatOptions: {
+						        	preserveDecimals: false,
+								    decimals: '1',
+					        		constraints: { decimals: 1 }
+					    		} }" />
+						</template>
+					</Column>
+					
+					<Column 
+						width="4rem"
+						name="{i18n>Duration}"
+						id="GanttCol_Duration"
+						>
+						<m:Label text="{i18n>Duration}"/>
+						<template>
+							<m:Text text="{ 
+						        parts: [ { path: 'mGlobal>Duration' }, { path: 'mGlobal>DurationNormalUnit' }],
+						        type: 'sap.ui.model.type.Unit',
+						        formatOptions: {
+						        	preserveDecimals: false,
+								    decimals: '1',
+					        		constraints: { decimals: 1 }
+					    		} }" />
+						</template>
+					</Column>
+
+					<Column 
+						width="3rem"
+						name="{i18n>Count}"
+						id="GanttCol_Count"
+						>
+						<m:Label text="{i18n>Count}"/>
+						<template>
+							<m:Label text="{mGlobal>Count}"/>
+						</template>
+					</Column>
+					
+					<!--<Column width="3rem">-->
+					<!--	<m:Text text="{i18n>Duration}"/>-->
+					<!--	<template>-->
+					<!--		<m:Label text="{mGlobal>ActualDur}"/>-->
+					<!--	</template>-->
+					<!--</Column>-->
+					
+					<!--<Column width="3rem">-->
+					<!--	<m:Text text="{i18n>Remaining}"/>-->
+					<!--	<template>-->
+					<!--		<m:Label text="{mGlobal>RemWork}"/>-->
+					<!--	</template>-->
+					<!--</Column>-->
+					
+					<Column 
+						width="10rem"
+						name="{i18n>START_DATE}"
+						id="GanttCol_StartDate"
+						>
+						<m:Label text="{i18n>START_DATE}"/>
+						<template>
+							<m:DateTimePicker width="10rem" valueFormat="yyyyMMddHHmmss" value="{mGlobal>StartDate}" displayFormat="short" change="onTreeTableDateChanges"/>
+						</template>
+					</Column>
+					
+					<Column 
+						width="10rem"
+						name="{i18n>FINISH_DATE}"
+						id="GanttCol_EndDate"
+						>
+						<m:Label text="{i18n>FINISH_DATE}"/>
+						<template>
+							<m:DateTimePicker width="10rem" valueFormat="yyyyMMddHHmmss" value="{mGlobal>EndDate}" displayFormat="short" change="onTreeTableDateChanges"/>
+						</template>
+					</Column>
+				</columns>
+
+				<rowSettingsTemplate>
+						
+					<gnt2:GanttRowSettings 
+						rowId="{mGlobal>ObjectID}"
+						relationships="{path:'mGlobal>/Relationships', templateShareable: 'false'}"
+						shapes2="{path: 'mGlobal>subtask', templateShareable:'false'}">
+
+						<gnt2:shapes1>
+							<gnt2:BaseText
+								visible="{= !!${mGlobal>/ShapeTextVisible} &amp;&amp; !!${mGlobal>StartDate} &amp;&amp; !!${mGlobal>WorkCntr} }"
+								text="{mGlobal>WorkCntr}"
+								time="{ parts: [ 'mGlobal>StartDate',
+												 'mGlobal>WorkCntr', 
+												 'mGlobal>/ZoomLevel' ], 
+									   formatter: '.formatter.workCntrTextPosition' }"
+								textAnchor="end"
+								xBias="35"
+							/>
+						</gnt2:shapes1>
+						
+						<gnt2:shapes1>
+								<gnt2:BaseRectangle shapeId="{mGlobal>ObjectID}"
+									time="{path: 'mGlobal>StartDate', formatter: '.formatter.fnTimeConverter'}"
+									endTime="{path: 'mGlobal>EndDate', formatter: '.formatter.fnTimeConverter'}"
+									tooltip="{mGlobal>ShortText}"
+									fill="{mGlobal>Color}"
+									resizable="true"
+									draggable="true"
+									selectable="true"
+									hoverable="true"
+									connectable="{mGlobal>Connectable}"
+									height="{mGlobal>Height}"
+									type="{mGlobal>Type}"
+									horizontalTextAlignment="Start"
+									verticalTextAlignment="Center"
+									fontWeight="bold"
+									stroke="{mGlobal>StrokeColor}"
+									strokeDasharray="{mGlobal>StrokeDash}"
+									strokeWidth="{mGlobal>StrokeWidth}" 	/>
+						</gnt2:shapes1>
+						
+						<gnt2:shapes1>
+							<gnt2:BaseDiamond
+								visible="{mGlobal>DueDateVisible}"
+								shapeId="{mGlobal>DueDateObjectID}"
+								time="{path: 'mGlobal>DueDateStartDate', formatter: '.formatter.fnTimeConverter'}" endTime="{path: 'mGlobal>DueDateEndDate', formatter: '.formatter.fnTimeConverter'}"
+							/>
+						</gnt2:shapes1>
+						
+						<gnt2:shapes1>
+							<gnt2:BaseText
+								visible="{mGlobal>/ShapeTextVisible}"
+								text="{mGlobal>ShortText}"
+								time="{path: 'mGlobal>EndDate', formatter: '.formatter.fnTimeConverter'}"
+								xBias="35"
+							/>
+						</gnt2:shapes1>
+	
+						<gnt2:relationships>
+							<gnt2:Relationship shapeId="{mGlobal>RelationID}"
+							predecessor="{mGlobal>PredecTaskID}" 
+							successor="{mGlobal>SuccTaskID}" 
+							type="{mGlobal>RelationType}" 
+							tooltip="{mGlobal>PredecTaskID} to {mGlobal>SuccTaskID} - Offset: {mGlobal>DurationRelation} {path: 'mGlobal>DurationRelationUnit', formatter: '.formatter.parseDurationUnits'}"
+							selectable="true" 
+							shapeTypeStart="{mGlobal>shapeTypeStart}" 
+							shapeTypeEnd="{mGlobal>shapeTypeEnd}"
+							startShapeColor="{mGlobal>startShapeColor}" 
+							endShapeColor="{mGlobal>endShapeColor}" hoverable="true"
+							selectedStartShapeColor="{mGlobal>selectedStartShapeColor}" 
+							selectedEndShapeColor="{mGlobal>selectedEndShapeColor}"
+							enableCurvedEdge="{mGlobal>enableCurvedEdge}" 
+							lShapeForTypeFS="{mGlobal>lShapeForTypeFS}" 
+							lShapeForTypeSF="{mGlobal>lShapeForTypeSF}"/>
+						</gnt2:relationships>
+	
+	
+						<gnt2:shapes2>
+							<gnt2:BaseRectangle 
+								time="{path: 'mGlobal>startTime', formatter: '.formatter.fnTimeConverter'}"
+								endTime="{path: 'mGlobal>endTime', formatter: '.formatter.fnTimeConverter'}"
+								height="50"
+								fill="{mGlobal>fill}"
+								resizable="false"
+								draggable="false"
+								selectable="true"
+								hoverable="false" 
+								connectable="false"/>
+						</gnt2:shapes2>
+						
+						<gnt2:calendars>
+							<gnt2:BaseCalendar visible="{= !!${mGlobal>WorkCntr} }" horizontalTextAlignment="Middle" calendarName="{mGlobal>WorkCntr}"/>
+						</gnt2:calendars>
+						
+					</gnt2:GanttRowSettings>
+				</rowSettingsTemplate>
+				
+			</TreeTable>
+			
+		</gnt2:table>
+		
+		<gnt2:calendarDef>
+			<cal:CalendarDefs id='calDefs'>
+				<!--<cal:defs>-->
+				<!--	<cal:Calendar key="SPINELEC" backgroundColor="#cad2cd">-->
+				<!--		<cal:TimeInterval startTime="{mGlobal>startTime}" endTime="{mGlobal>endTime}" />-->
+						<!--<cal:TimeInterval startTime="20230303170000" endTime="20230305170000" />-->
+						<!--<cal:TimeInterval startTime="20230307170000" endTime="20230309170000" />-->
+				<!--	</cal:Calendar>-->
+				<!--</cal:defs>-->
+			</cal:CalendarDefs>
+		</gnt2:calendarDef>
+		
+	</gnt2:GanttChartWithTable>
+
+</core:FragmentDefinition>

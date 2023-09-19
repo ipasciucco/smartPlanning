@@ -1,0 +1,33 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout" 
+	>
+	
+	<VBox class="sapUiSmallMargin" width="50rem">
+		
+		<CheckBox 
+			text="Change Order Personal Notes" 
+			selected="{mGlobal>/Changes/Order/ChangePersonalNote}"
+			visible="{mGlobal>/ChangeSettings/PersonalNote/Order}"/>
+		<TextArea
+			visible="{= !!${mGlobal>/Changes/Order/ChangePersonalNote} }"
+			value="{mGlobal>/Changes/Order/PersonalNote}" 
+			rows="8" 
+			width="40rem"
+			/>
+		
+		<CheckBox 
+			text="Change Operation Personal Notes" 
+			selected="{mGlobal>/Changes/Operation/ChangePersonalNote}" 
+			visible="{= ${mGlobal>/ObjectTab} === 'operation' &amp;&amp; ${mGlobal>/ChangeSettings/PersonalNote/Operation} }" />
+		<TextArea
+			visible="{= !!${mGlobal>/Changes/Operation/ChangePersonalNote} }"
+			value="{mGlobal>/Changes/Operation/PersonalNote}" 
+			rows="8" 
+			width="40rem"
+			/>
+		
+	</VBox>
+</core:FragmentDefinition>

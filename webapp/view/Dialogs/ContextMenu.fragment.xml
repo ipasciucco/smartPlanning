@@ -1,0 +1,19 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout" 
+	>
+	<Menu itemSelected="onItemSelectedContextMenu" closed="onClosedContextMenu">
+					<MenuItem text="Delete" />
+					<MenuItem text="Edit Relationship Type">
+						<items>
+							<MenuItem text="FinishToFinish"/>
+							<MenuItem text="FinishToStart"/>
+							<MenuItem text="StartToFinish"/>
+							<MenuItem text="StartToStart"/>
+						</items>
+					</MenuItem>
+					<MenuItem text="Change Offset" />
+	</Menu>
+</core:FragmentDefinition>

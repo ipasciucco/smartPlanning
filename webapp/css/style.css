@@ -1,0 +1,82 @@
+/* Enter your custom styles here */
+div[id*="_maintPlanNavigator"]{
+    width: 25rem;
+}
+
+div[id*="_workCenterNavigator"]{
+    width: 25rem;
+}
+
+/* Nombre de tala gant1 --> nivel tree 1 (ordenes) */
+table[id*="treeTableGantt1"] [aria-level="1"]  {
+    background-color: #FDEBD0;
+}
+
+/* Ocultar title bar en version WebIDE */
+#container-smartplanning---Worklist--page-page-header {
+	visibility: hidden;
+    height: 0px;
+}
+
+/* Ocultar title bar en version Deploy Lauchpad */
+#application-smartscheduling-Display-component---Worklist--page-page-header {
+	visibility: hidden;
+    height: 0px;
+}
+ 
+/* Ocultar el SubHeader del Sell bar,  el Header se oculta en App.js*/
+#shell-split-canvassubHeader {
+    visibility: hidden;
+    height: 0px;
+}
+
+/* Ocultar el SubHeader del Sell Header*/
+#menuBar {
+    visibility: hidden;
+    height: 0px;
+}
+
+/* Borrar espacio vacio que dejan los headers a través del Shell Content */
+#shell-cntnt {
+    top: 0px !important;
+}
+
+.iconSize {
+	font-size : 1.5rem;
+}
+
+.VerticalText {
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    font-weight: bold;
+}
+
+.CarHeaderBorder > div[id*="header"]{
+	border-bottom: none
+}
+
+.KanbanPannel{
+	margin: 0.25rem;
+	min-height:10rem;
+}
+
+.KanbanGrid{
+	min-height:174px;
+	height:100%;
+}
+
+.KanbanGrid > ul[role="list"]{
+	height:100%;
+	grid-auto-rows: auto;
+	align-content:start;
+	align-items: start;
+}
+
+.KanbanGrid > ul[role="list"] > [role="listitem"] {
+	height:min-content;
+}
+
+.KanbanGrid > .sapMListModeNone{
+	min-height:174px;
+}
+

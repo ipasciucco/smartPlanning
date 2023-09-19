@@ -1,0 +1,113 @@
+<core:FragmentDefinition 
+	controllerName="com.blueboot.smartplanning.controller.Gantt" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	displayBlock="true"
+	xmlns:semantic="sap.f.semantic" 
+	xmlns="sap.ui.table"
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:gnt="sap.gantt"
+	xmlns:gnt-def="sap.gantt.def"
+	xmlns:gnt-pattern="sap.gantt.def.pattern"
+	xmlns:gnt-cal="sap.gantt.def.cal"
+	xmlns:axistime="sap.gantt.axistime"
+	xmlns:config="sap.gantt.config"
+	xmlns:shapes="sap.gantt.simple.shapes"
+	xmlns:gnt2="sap.gantt.simple"
+	xmlns:l="sap.ui.layout"
+	>
+	
+	<gnt2:GanttChartWithTable visibleHorizonUpdate="onWorkGantVisibilityChange" id="gantt2">
+						
+		<gnt2:axisTimeStrategy>
+			<axistime:StepwiseZoomStrategy  id="zoomStrategy2" zoomLevels="4">
+				<axistime:totalHorizon>
+					<config:TimeHorizon startTime="{mGlobal>/TotalHorizonStartDate}" endTime="{mGlobal>/TotalHorizonEndDate}"/>
+				</axistime:totalHorizon>
+				<axistime:visibleHorizon>
+					<config:TimeHorizon startTime="{mGlobal>/VisibleHorizonStartDate}" endTime="{mGlobal>/VisibleHorizonEndDate}"/>
+				</axistime:visibleHorizon>
+			</axistime:StepwiseZoomStrategy>
+		</gnt2:axisTimeStrategy>
+		
+		<gnt2:table>
+			
+			<TreeTable
+				fixedLayout="false"
+				id="treeTableGantt2"
+				selectionMode="None"
+				visibleRowCountMode="Auto"
+				minAutoRowCount="4"
+				selectionBehavior="RowSelector"
+				rows="{
+					path: 'mGlobal>/CapacityGant',
+					parameters: {
+						arrayNames: ['children'],
+						numberOfExpandedLevels: 0,
+						treeAnnotationProperties: {
+							hierarchyNodeFor: 'ObjectID',
+							hierarchyParentNodeFor: 'ParentObjectID',
+							hierarchyLevelFor: 'HierarchyNodeLevel',
+							hierarchyDrillStateFor: 'DrillDownState',
+							hierarchyNodeDescendantCountFor: 'Magnitude'
+						},
+						expand: 'persons'
+					}
+				}"
+				rowHeight="30">
+				
+				<columns>
+					<Column width="7rem">
+						<m:Text text="{i18n>PLANT}"/>
+						<template>
+							<m:Label text="{mGlobal>Werks}"/>
+						</template>
+					</Column>
+					<Column width="9rem">
+						<m:Text text="{i18n>WORK_CENTER}"/>
+						<template>
+							<m:Link text="{mGlobal>Arbpl}" press="onPressWorkCenter"/>
+						</template>
+					</Column>
+					<Column width="11rem">
+						<m:Text text="{i18n>PersName}"/>
+						<template>
+							<m:Label text="{mGlobal>PersName}"/>
+						</template>
+					</Column>
+
+				</columns>
+				
+				
+				<rowSettingsTemplate>
+					<gnt2:GanttRowSettings shapes2="{path: 'mGlobal>subtask', templateShareable:'false'}">
+						<gnt2:shapes2>
+							<gnt2:BaseRectangle 
+								title="{mGlobal>title}"
+								tooltip="{mGlobal>title}"
+								time="{path: 'mGlobal>startTime', formatter: '.formatter.fnTimeConverter'}"
+								endTime="{path: 'mGlobal>endTime', formatter: '.formatter.fnTimeConverter'}"
+								height="30"
+								horizontalTextAlignment="Middle"
+								verticalTextAlignment="Center"
+								fontWeight="bold"
+
+								fill="{mGlobal>fill}"
+								resizable="false"
+								draggable="false"
+								selectable="false"
+								hoverable="false"
+							 />
+						</gnt2:shapes2>
+					</gnt2:GanttRowSettings>
+				</rowSettingsTemplate>
+				
+
+			</TreeTable>
+		</gnt2:table>		
+	
+	
+	</gnt2:GanttChartWithTable>
+			
+
+</core:FragmentDefinition>

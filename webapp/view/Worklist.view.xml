@@ -1,0 +1,64 @@
+<mvc:View controllerName="com.blueboot.smartplanning.controller.Worklist" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	displayBlock="true" 
+	xmlns="sap.m" 
+	xmlns:semantic="sap.f.semantic" 
+	xmlns:core="sap.ui.core"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:smartMultiInput="sap.ui.comp.smartmultiinput"
+	>
+
+	<semantic:SemanticPage 
+		id="page" 
+		headerPinnable="false" 
+		toggleHeaderOnTitleClick="false" 
+		showFooter="true" 
+		headerExpanded="true"
+		class="sapUiNoContentPadding">
+		
+		<semantic:titleHeading>
+			<Title text="{i18n>title}" level="H2"/>
+		</semantic:titleHeading>
+		
+		<semantic:titleCustomTextActions>
+			
+		</semantic:titleCustomTextActions>
+		
+		<semantic:messagesIndicator>
+			<semantic:MessagesIndicator id="MessagesIndicator" press="toggleMessagePopover" visible="{= ${message>/}.length > 0 }"/>
+		</semantic:messagesIndicator>
+		
+		<semantic:positiveAction>
+			<semantic:PositiveAction press="onEditSave" visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>/OrderSet}.length }"/>
+		</semantic:positiveAction>
+
+		<semantic:negativeAction>
+			<semantic:NegativeAction press="onEditCancel" visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>/OrderSet}.length }"/>
+		</semantic:negativeAction>
+
+		<semantic:footerCustomActions>
+			<Button id="id_kanban_button" text="Kanban" press="onKaban" /> 
+			<Button text="Gant View" press="onGantt" visible="{= !${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>/OrderSet}.length &amp;&amp; !!${mGlobal>/ChangeAuth} }"/>
+			<Button text="{i18n>edit-table}" press="onEditTable" visible="{= !${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>/OrderSet}.length &amp;&amp; !!${mGlobal>/ChangeAuth} }" />
+			<Button text="Change" press="onChange" type="Emphasized" visible="{= !${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>/OrderSet}.length &amp;&amp; !!${mGlobal>/ChangeAuth} }" />
+		</semantic:footerCustomActions>
+
+		<semantic:headerContent>
+			<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.Worklist.Filters" type="XML" id="FiltersFragment"/>
+		</semantic:headerContent>
+		
+		<semantic:content>
+					<VBox width="100%" fitContainer="true">
+						<items>
+							<FlexBox justifyContent="Center" visible="{= !!${mGlobal>/Loading} }" > 
+								<BusyIndicator text="{mGlobal>/Loading}" class="sapUiTinyMarginBottom" /> 
+							</FlexBox>
+							<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.Worklist.OrdersTable" type="XML" id="OrdersTableFragment"/>
+							<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.Worklist.OperationsTable" type="XML" id="OperationsTableFragment"/>
+						</items>
+					</VBox>
+		</semantic:content>
+
+	</semantic:SemanticPage>
+
+</mvc:View>

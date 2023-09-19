@@ -1,0 +1,160 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout" 
+	>
+	
+	<MessageStrip
+		text="{i18n>StatProfWarning}"
+		showIcon="true"
+		class="sapUiMediumMarginBottom"
+		visible="{= !${mGlobal>/StatProfOrder} }" />
+	
+	<f:Form editable="true" width="50rem">
+		<f:layout>
+			<f:ColumnLayout
+				columnsM="1"
+				columnsL="1"
+				columnsXL="1" />
+		</f:layout>
+		
+		<f:formContainers>
+			
+			<f:FormContainer>
+				
+				<f:formElements>
+					
+					<f:FormElement label="{i18n>SHORT_TEXT}" visible="{mGlobal>/ChangeSettings/Order/ShortText}">
+						<f:fields>
+							<Input maxLength="40" value="{mGlobal>/Changes/Order/ShortText}" /> 
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>PRIORITY}" visible="{mGlobal>/ChangeSettings/Order/Priority}">
+						<f:fields>
+							<ComboBox 
+								showSecondaryValues="true" 
+								items="{ path: 'mGlobal>/PrioritySet', sorter: { path: 'AUART' } }"
+								selectedKey="{mGlobal>/Changes/Order/Priority}" >
+								<core:ListItem key="{mGlobal>PRIOK}" text="{mGlobal>PRIOKX}" additionalText="{mGlobal>PRIOK}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>WORK_CENTER}" visible="{mGlobal>/ChangeSettings/Order/MnWkCtr}">
+						<f:fields>
+							<Input  value="{mGlobal>/Changes/Order/MnWkCtr}" showValueHelp="true" valueHelpRequest=".VH.onWorkCntrVH"  />
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>FUNCTIONAL_LOCATION}" visible="{mGlobal>/ChangeSettings/Order/FunctLoc}">
+						<f:fields>
+							<Input value="{mGlobal>/Changes/Order/FunctLoc}" description="Clear" fieldWidth="83%" enabled="{= !${mGlobal>/Changes/Order/ClearFuncLoc} }"  showValueHelp="true" valueHelpRequest=".VH.onFunctLocVH"  />
+							<CheckBox selected="{mGlobal>/Changes/Order/ClearFuncLoc}" />
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>EQUIPMENT}" visible="{mGlobal>/ChangeSettings/Order/Equipment}">
+						<f:fields>
+							<Input  value="{mGlobal>/Changes/Order/Equipment}" description="Clear" fieldWidth="83%" enabled="{= !${mGlobal>/Changes/Order/ClearEquipment} }"  showValueHelp="true" valueHelpRequest=".VH.onEquipmentVH"  />
+							<CheckBox selected="{mGlobal>/Changes/Order/ClearEquipment}" />
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>RESPONSIBLE}" visible="{mGlobal>/ChangeSettings/Order/PersonResponsible}">
+						<f:fields>
+							<Input value="{mGlobal>/Changes/Order/PersonResponsible}" description="Clear" fieldWidth="83%" enabled="{= !${mGlobal>/Changes/Order/ClearPersonResponsible} }" showValueHelp="true" valueHelpRequest=".VH.onPersonResponsibleVH"  />
+							<CheckBox selected="{mGlobal>/Changes/Order/ClearPersonResponsible}"/>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>add-user-status}" visible="{mGlobal>/ChangeSettings/Order/AddUserStatus}">
+						<f:fields>
+							<MultiComboBox
+								id="ADD_UserStatus_Order"
+								showClearIcon="true"
+								width="350px"
+								items="{
+									path: 'mGlobal>/OrderUserStatusFiltered',
+									sorter: { path: 'Name' }
+								}">
+								<core:Item key="{mGlobal>Txt04}" text="{mGlobal>Txt04} - {mGlobal>Txt30}"/>
+							</MultiComboBox>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>delete-user-status}" visible="{mGlobal>/ChangeSettings/Order/DeleteUserStatus}">
+						<f:fields>
+							<MultiComboBox
+								id="DELETE_UserStatus_Order"
+								showClearIcon="true"
+								width="350px"
+								items="{
+									path: 'mGlobal>/OrderUserStatusFiltered',
+									sorter: { path: 'Name' }
+								}">
+								<core:Item key="{mGlobal>Txt04}" text="{mGlobal>Txt04} - {mGlobal>Txt30}"/>
+							</MultiComboBox>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>basic-start}" visible="{mGlobal>/ChangeSettings/Order/StartDate}">
+						<f:fields>
+							<DatePicker
+							placeholder="yyyyMMdd"
+							class="sapUiSmallMarginBottom"
+							value="{mGlobal>/Changes/Order/StartDate}" 
+							valueFormat="yyyyMMdd"/>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>basic-finish}" visible="{mGlobal>/ChangeSettings/Order/FinishDate}">
+						<f:fields>
+							<DatePicker
+							placeholder="yyyyMMdd"
+							class="sapUiSmallMarginBottom"
+							value="{mGlobal>/Changes/Order/FinishDate}" 
+							valueFormat="yyyyMMdd"/>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>REVISION}" visible="{mGlobal>/ChangeSettings/Order/Revision}">
+						<f:fields>
+							<Input value="{mGlobal>/Changes/Order/Revision}" description="Clear" fieldWidth="83%" enabled="{= !${mGlobal>/Changes/Order/ClearRevision} }" showValueHelp="true" valueHelpRequest=".VH.onRevisionVH"  />
+							<CheckBox selected="{mGlobal>/Changes/Order/ClearRevision}" />
+						</f:fields>
+					</f:FormElement>
+
+					<f:FormElement label="{i18n>syst-cond}" visible="{mGlobal>/ChangeSettings/Order/Systcond}">
+						<f:fields>
+							<ComboBox 
+								width="350px"
+								showSecondaryValues="true" 
+								items="{ path: 'mGlobal>/SystCondSet', sorter: { path: 'Anlzu' } }"
+								selectedKey="{mGlobal>/Changes/Order/SystCond}" >
+								<core:ListItem key="{mGlobal>Anlzu}" text="{mGlobal>Anlzux}" additionalText="{mGlobal>Anlzu}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+
+					<f:FormElement label="{i18n>release}" visible="{mGlobal>/ChangeSettings/Order/Release}">
+						<f:fields>
+							<CheckBox selected="{mGlobal>/Changes/Order/Release}"/>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>tecnical-complete}" visible="{mGlobal>/ChangeSettings/Order/TeCo}">
+						<f:fields>
+							<CheckBox selected="{mGlobal>/Changes/Order/TeCo}"/>
+						</f:fields>
+					</f:FormElement>
+				
+				</f:formElements>
+				
+			</f:FormContainer>
+			
+		</f:formContainers>
+	</f:Form>
+				
+</core:FragmentDefinition>

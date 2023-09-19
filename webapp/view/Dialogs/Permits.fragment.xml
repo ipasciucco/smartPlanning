@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="permitsDialog" title="{i18n>PERMITS}">
+		<buttons>
+			<Button text="{i18n>CLOSE}" press="onPermitsDialogClose" type="Reject"/>
+		</buttons>
+		<content>
+			<Table width="25rem" items="{ path: 'mGlobal>/Permits', sorter: { path: 'Release' } }">
+				<columns>
+					<Column width="17em">
+						<Text text="{i18n>DESCRIPTION}"/>
+					</Column>
+					<Column width="8em">
+						<Text text="{i18n>ISSUED}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem vAlign="Middle">
+						<cells>
+							<Text text="{mGlobal>Text}"/>
+							<VBox>
+								<Button text="Approve" visible="{= !${mGlobal>IssuedBy} }" press="onPermitApproved" enabled="{= !!${mGlobal>/ChangeAuth} }"/>
+								<Text text="{mGlobal>IssuedBy}" visible="{= !!${mGlobal>IssuedBy} }"/>
+							</VBox>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,21 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout" 
+	>
+	
+	<VBox class="sapUiSmallMargin" width="50rem">
+		
+		<CheckBox text="{i18n>SHOW_TAB}" selected="{mGlobal>/CurrentChangeSettings/PersonalNote/ObjectTab}" />
+		<CheckBox 
+			text="Order Personal Notes" 
+			selected="{mGlobal>/CurrentChangeSettings/PersonalNote/Order}" />
+		<CheckBox 
+			text="Operation Personal Notes" 
+			selected="{mGlobal>/CurrentChangeSettings/PersonalNote/Operation}" />
+		
+	</VBox>
+	
+	
+</core:FragmentDefinition>

@@ -1,0 +1,69 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout"
+	>
+	<Dialog id="OperationsRelation" title="{i18n>OperationsRelationsTitle}">
+		
+		<buttons>
+			<Button text="{i18n>SAVE}" press="onOperationsRelationsSave" type="Accept"/>
+			<Button text="{i18n>CANCEL}" press="onOperationsRelationsClose" type="Reject"/>
+		</buttons>
+		<content>
+			
+			<l:VerticalLayout class="sapUiNoContentPadding" >
+				
+				<f:Form editable="true" width="20rem">
+					<f:layout>
+						<f:ColumnLayout
+							columnsM="1"
+							columnsL="1"
+							columnsXL="1"/>
+					</f:layout>
+					
+					<f:formContainers>
+						
+						<f:FormContainer>
+							
+							<f:formElements>
+								
+								<f:FormElement label="Type" visible="{mGlobal>/RelationInputVisible}">
+									<f:fields>
+										<ComboBox
+											selectedKey="{mGlobal>/RelationTypeSelected}"
+											items="{
+												path: 'mGlobal>/RelationTypes',
+												sorter: { path: 'mGlobal>Text' }
+											}">
+											<core:Item key="{mGlobal>Value}" text="{mGlobal>Text}"/>
+										</ComboBox>
+									</f:fields>
+								</f:FormElement>
+								
+								<f:FormElement label="{i18n>TimeInterval}">
+									<f:fields>
+										<Input type="Number" maxLength="3" value="{mGlobal>/RelationTime}" /> 
+										<ComboBox
+											selectedKey="{mGlobal>/RelationTimeUnitSelected}"
+											items="{
+												path: 'mGlobal>/RelationTimeUnits',
+												sorter: { path: 'mGlobal>Text' }
+											}">
+											<core:Item key="{mGlobal>Key}" text="{mGlobal>Text}"/>
+										</ComboBox>
+									</f:fields>
+								</f:FormElement>
+							
+							</f:formElements>
+							
+						</f:FormContainer>
+						
+					</f:formContainers>
+				</f:Form>
+						
+			</l:VerticalLayout>
+					
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

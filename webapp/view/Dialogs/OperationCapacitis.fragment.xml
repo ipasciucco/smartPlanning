@@ -1,0 +1,47 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	>
+	<Dialog id="operationCapacitiesDialog" title="{i18n>Capacity_Assignment}">
+		
+		<buttons>
+			<Button text="{i18n>CLOSE}" press="OperationCapacitiesClose" type="Reject"/>
+		</buttons>
+		<content>
+			
+		<Table 
+			width="30rem"
+			items="{ path: 'mGlobal>/OperationCapacitis', sorter: { path: 'Splitpernrpernr', descending: false } }"
+			>
+			
+			<columns>
+				<Column>
+					<Text text="{i18n>PERNR}" />
+				</Column>
+				<Column>
+					<Text text="{i18n>PersNoDesc}" />
+				</Column>
+				<Column>
+					<Text text="{i18n>KBEASOLL}"/>
+				</Column>
+				<Column>
+					<Text text="{i18n>KEINH}"/>
+				</Column>
+			
+			</columns>
+				
+			<items>
+				<ColumnListItem>
+					<ObjectIdentifier title="{mGlobal>Pernr}"/>
+					<Text  text="{mGlobal>PernrName}"/>
+					<Text  text="{mGlobal>Kbeasoll}"/>
+					<Text  text="{mGlobal>Keinh}"/>
+				</ColumnListItem>
+			</items>
+			
+		</Table>
+
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

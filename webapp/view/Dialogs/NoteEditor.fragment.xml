@@ -1,0 +1,15 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	>
+	<Dialog id="noteEditorDialog" title="{i18n>NOTE_EDITOR}">
+		
+		<buttons>
+			<Button text="{i18n>CLOSE}" press="onNoteDialogClose" type="Reject"/>
+			<Button text="{i18n>SAVE}" press="onNoteDialogSave" type="Accept" visible="{= !!${mGlobal>/ChangeAuth} }" />
+		</buttons>
+		<content>
+			<TextArea value="{mGlobal>/PersonalNote/EditedValue}" rows="10" width="100%" enabled="{= !!${mGlobal>/ChangeAuth} &amp;&amp; !${mGlobal>/EditMode} }" />
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

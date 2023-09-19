@@ -1,0 +1,80 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout"
+	>
+	<Dialog id="MassDateChange" title="{i18n>OperationsRelationsTitle}">
+		
+		<buttons>
+			<Button text="{i18n>SAVE}" press="onMassDateSave" type="Accept"/>
+			<Button text="{i18n>CANCEL}" press="onMassDateClose" type="Reject"/>
+		</buttons>
+		<content>
+			
+			<l:VerticalLayout class="sapUiNoContentPadding" >
+				
+				<f:Form editable="true" width="20rem">
+					<f:layout>
+						<f:ColumnLayout
+							columnsM="1"
+							columnsL="1"
+							columnsXL="1"/>
+					</f:layout>
+					
+					<f:formContainers>
+						
+						<f:FormContainer title="{i18n>BasicDates}">
+							
+							<f:formElements>
+								
+								<f:FormElement label="{i18n>START_DATE}" >
+									<f:fields>
+										<DateTimePicker valueFormat="yyyyMMddHHmmss" value="{mGlobal>/MassStartDate}" displayFormat="short"/>
+									</f:fields>
+								</f:FormElement>
+								
+								<f:FormElement label="{i18n>FINISH_DATE}">
+									<f:fields>
+										<DateTimePicker valueFormat="yyyyMMddHHmmss" value="{mGlobal>/MassEndDate}" displayFormat="short"/>
+									</f:fields>
+								</f:FormElement>
+							
+							</f:formElements>
+							
+						</f:FormContainer>
+						
+						<f:FormContainer title="{i18n>ByDelta}">
+							
+							<f:formElements>
+								
+								<f:FormElement label="{i18n>Day}" >
+									<f:fields>
+										<StepInput value="{mGlobal>/MassDayDelta}"	min="-99" max="99" step="1"/>
+									</f:fields>
+								</f:FormElement>
+								
+								<f:FormElement label="{i18n>Hour}">
+									<f:fields>
+										<StepInput value="{mGlobal>/MassHourDelta}"	min="-24" max="24" step="1"/>
+									</f:fields>
+								</f:FormElement>
+								
+								<f:FormElement label="{i18n>Minute}">
+									<f:fields>
+										<StepInput value="{mGlobal>/MassMinuteDelta}" min="-60" max="60" step="1"/>
+									</f:fields>
+								</f:FormElement>
+							
+							</f:formElements>
+							
+						</f:FormContainer>
+						
+					</f:formContainers>
+				</f:Form>
+						
+			</l:VerticalLayout>
+					
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

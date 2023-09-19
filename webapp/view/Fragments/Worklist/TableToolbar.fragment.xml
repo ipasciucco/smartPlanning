@@ -1,0 +1,70 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core">
+	
+	<SegmentedButton selectedKey="{mGlobal>/ObjectTab}" >
+		<items>
+			<SegmentedButtonItem id="ordViewTableButton" 
+				key="order" 
+				text="{i18n>ORDERS} ({= ${mGlobal>/OrderSet}.length})"
+				icon="sap-icon://eam-work-order"
+				press=".onPressViewOrderTable"/>
+			<SegmentedButtonItem id="opViewTableButton" 
+				key="operation" 
+				text="{i18n>OPERATIONS} ({= ${mGlobal>/OrderOperationSet}.length})" 
+				icon="sap-icon://technical-object"
+				press=".onPressViewOperationTable"/>
+		</items>
+	</SegmentedButton>
+	
+	<Button icon="sap-icon://multiselect-all" 
+		tooltip="{i18n>select-all}" 
+		press=".onSelect(true)"/>
+	<Button icon="sap-icon://multiselect-none" 
+		tooltip="{i18n>select-none}" 
+		press=".onSelect(false)"/>
+	
+	
+	<!--<Label text="{i18n>OrdersSelectedButton}" visible="{= ${mGlobal>/ObjectTab} === 'operation' ? true : false }"/>-->
+	<!--<Switch -->
+	<!--	state="{/FilterOperationsByOrders}"-->
+	<!--	customTextOn="{i18n>OrdersSelectedButton}"-->
+	<!--	customTextOff="{i18n>OrdersSelectedButton}"-->
+	<!--	visible="{= ${mGlobal>/ObjectTab} === 'operation' ? true : false }">-->
+	<!--</Switch>-->
+	
+	<ToggleButton
+		visible="{= ${mGlobal>/ObjectTab} === 'operation' ? true : false }"
+		text="{i18n>OrdersSelectedButton}" 
+		pressed="{= !${/FilterOperationsByOrders} }" 
+		press="setfilterOperationsbyOrders" >
+		<layoutData>
+			<FlexItemData growFactor="1" />
+		</layoutData>
+	</ToggleButton>
+			
+	<!--<Button text="{i18n>OrdersSelectedButton}" -->
+	<!--	icon="sap-icon://multiselect-all" -->
+	<!--	tooltip="{i18n>select-all}" -->
+	<!--	press="setfilterOperationsbyOrders"-->
+	<!--	visible="{= ${mGlobal>/ObjectTab} === 'operation' ? true : false }"/>-->
+		
+	<Input class="sapUiMediumMarginBegin" 
+		placeholder="Filter" 
+		width="20rem" 
+		valueLiveUpdate="true" 
+		value="{mGlobal>/FilterString}"
+		liveChange="onFilterString"/>
+		
+	<MenuButton text="{mGlobal>/FitlerOption/text}" buttonMode="Split">
+		<menu>
+			<Menu itemSelected="onMenuAction">
+				<MenuItem text="Contains" key="Contains" press="selectFilterOption"/>
+				<MenuItem text="Ends With" key="EndsWith" press="selectFilterOption"/>
+				<MenuItem text="Not Contains" key="NotContains" press="selectFilterOption"/>
+				<MenuItem text="Starts With" key="StartsWith" press="selectFilterOption"/>
+			</Menu>
+		</menu>
+	</MenuButton>
+	
+</core:FragmentDefinition>

@@ -1,0 +1,35 @@
+{
+    "application": {
+        "id": "",
+        "title": "com.blueboot.smartplanning.smartplanning",
+        "description": "Smart Scheduling",
+        "type": "SAP_UI5_Component",
+        "componentUrl": "/",
+        "appUrl": "#smartplanning-Display",
+        "navigationComponentName": "com.blueboot.smartplanning",
+        "intentSemanticObject": "smartplanning",
+        "intentAction": "Display",
+        "html5ApplicationName": "smartplanning",
+        "HCPParentApplicationName": ""
+    },
+    "assignment": {
+        "groups": [
+            "99bbc0e9-6444-45c4-b72c-af3f6707250d-1578318204492"
+        ],
+        "contentPackages": [
+            "2948d44d-0598-49af-8899-d7cc15cbcea1-1578318246730"
+        ],
+        "categories": []
+    },
+    "tile": {
+        "type": "StaticTile",
+        "title": "Smart Scheduling",
+        "subtitle": "Smart Scheduling",
+        "searchKeywords": "Smart Scheduling,Smart Scheduling",
+        "displayIconUrl": "sap-icon://approvals",
+        "displayInfoText": "",
+        "size": "1x1",
+        "serviceURL": "",
+        "refreshInterval": ""
+    }
+}

@@ -1,0 +1,55 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout"
+	>
+	<Dialog id="ChangeSettingsDialog" 
+		title="{i18n>CHANGE_SETTINGS}"
+		contentWidth="500px"
+		>
+		<buttons>
+			<Button text="OK" press="changeSettingsSave" type="Emphasized"/>
+			<Button text="{i18n>CANCEL}" press="changeSettingsClose" type="Default"/>
+		</buttons>
+		<content>
+			<Toolbar>
+				<content>
+					<IconTabHeader mode="Inline" selectedKey='{mGlobal>/ChangeSettingsObjectTab}' backgroundDesign="Transparent">
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow" shrinkable="true" />
+						</layoutData>
+						<items>
+							<IconTabFilter key="order" text="{i18n>ORDERS}" />
+							<IconTabFilter key="operation" text="{i18n>OPERATIONS}" />  
+							<IconTabFilter key="personalnote" text="{i18n>personalnote}" /> 
+						</items>
+					</IconTabHeader>
+					<ToolbarSpacer></ToolbarSpacer>
+					<Button icon="sap-icon://multiselect-all" type="Transparent" press="changeSettingsSelectAll">
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow"/>
+						</layoutData>
+					</Button>
+					<Button icon="sap-icon://multiselect-none" type="Transparent" press="changeSettingsSelectNone">
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow" />
+						</layoutData>
+					</Button>
+				</content>
+			</Toolbar>
+			
+			<l:VerticalLayout class='sapUiNoContentPadding' visible="{= ${mGlobal>/ChangeSettingsObjectTab} === 'order' }" >
+				<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.ChangeDialog.OrderSettings" type="XML" id="OrderChangeSettingsDialog"/>
+			</l:VerticalLayout>
+			
+			<l:VerticalLayout class='sapUiNoContentPadding' visible="{= ${mGlobal>/ChangeSettingsObjectTab} === 'operation' }" >
+				<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.ChangeDialog.OperationSettings" type="XML" id="OperationChangeSettingsDialog"/>
+			</l:VerticalLayout>
+			
+			<l:VerticalLayout class='sapUiNoContentPadding' visible="{= ${mGlobal>/ChangeSettingsObjectTab} === 'personalnote' }" >
+				<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.ChangeDialog.PersonalNotesSettings" type="XML" id="PersonalNotesChangeSettingsDialog"/>
+			</l:VerticalLayout>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

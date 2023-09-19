@@ -1,0 +1,24 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout" 
+	>
+
+	<VBox class="sapUiSmallMargin" width="50rem">
+		<CheckBox text="{i18n>SHOW_TAB}" selected="{mGlobal>/CurrentChangeSettings/Operation/ObjectTab}" />
+		<CheckBox text="{i18n>SHORT_TEXT}" selected="{mGlobal>/CurrentChangeSettings/Operation/Description}" />
+		<CheckBox text="{i18n>MUST_START_ON}" selected="{mGlobal>/CurrentChangeSettings/Operation/StartCons}" />
+		<CheckBox text="{i18n>MUST_FIN_ON}" selected="{mGlobal>/CurrentChangeSettings/Operation/FinCons}" />
+		<!--CheckBox text="{i18n>ADJUST_SUBSEQUENT}" selected="{mGlobal>/CurrentChangeSettings/Operation/Adjust}" /-->
+		<CheckBox text="{i18n>WORK_CENTER}" selected="{mGlobal>/CurrentChangeSettings/Operation/WorkCntr}" />
+		<CheckBox text="{i18n>CONTROL_KEY}" selected="{mGlobal>/CurrentChangeSettings/Operation/ControlKey}" />
+		<CheckBox text="{i18n>RESPONSIBLE}" selected="{mGlobal>/CurrentChangeSettings/Operation/PersonResponsible}" />
+		<CheckBox text="{i18n>add-user-status}" selected="{mGlobal>/CurrentChangeSettings/Operation/AddUserStatus}" />
+		<CheckBox text="{i18n>delete-user-status}" selected="{mGlobal>/CurrentChangeSettings/Operation/DeleteUserStatus}" />
+		<CheckBox text="{i18n>ACTIVITY_TYPE}" selected="{mGlobal>/CurrentChangeSettings/Operation/Acttype}" />
+		<CheckBox text="{i18n>CalcKey}" selected="{mGlobal>/CurrentChangeSettings/Operation/CalcKey}" />
+		
+	</VBox>
+				
+</core:FragmentDefinition>

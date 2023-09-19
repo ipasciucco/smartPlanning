@@ -1,0 +1,179 @@
+<core:FragmentDefinition 
+	controllerName="com.blueboot.smartplanning.controller.Worklist" 
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:CustomControls="com.blueboot.smartplanning.controls"
+	>
+		
+	<smartFilterBar:SmartFilterBar 
+		id="idSmartFilterBar" 
+		useToolbar="true" 
+		entitySet="DUMMY"
+		showClearOnFB="true" 
+		assignedFiltersChanged="onAssignedFiltersChanged"
+		enableBasicSearch="false" 
+		search="onSearch"
+		beforeVariantSave="onBeforeVariantSave"  
+		afterVariantLoad="onAfterVariantLoad"
+		persistencyKey="com.blueboot.smartplanning"
+		showClearButton="false"
+		>
+		
+			<smartFilterBar:controlConfiguration>
+
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="RefDateBegin" label="{i18n>ORDER_INITIAL_DATE}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<CustomControls:DynamicDateRange id="in_RefDateBegin" options="{/dynamicDateFilterKeys}" />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="RefDateEnd" label="{i18n>ORDER_FINAL_DATE}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<CustomControls:DynamicDateRange id="in_RefDateEnd" options="{/dynamicDateFilterKeys}" />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="Orderid" label="{i18n>ORDER}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_Orderid" width="70%" showValueHelp="false" maxLength='12'/>
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="Plant" label="{i18n>PLANT}" visibleInAdvancedArea="true" >
+				<smartFilterBar:customControl>
+					<MultiInput id="in_Plant" showValueHelp="true" valueHelpRequest=".VH.onPlantVH" maxLength='4' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="Status" label="{i18n>STATUS}" visibleInAdvancedArea="true" mandatory="mandatory" >
+				<smartFilterBar:customControl>
+					<MultiComboBox
+						id="in_Status"
+						items="{ path: 'mGlobal>/Status' }">
+						<core:Item key="{mGlobal>Key}" text="{mGlobal>Text}"/>
+					</MultiComboBox>
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="MnWkCtr" label="{i18n>WORK_CENTER}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_MnWkCtr" showValueHelp="true" valueHelpRequest=".VH.onWorkCntrVH" maxLength='8' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="OrderType" label="{i18n>ORDER_TYPE}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiComboBox 
+						id="in_OrderType" 
+						width="500px" 
+						showSecondaryValues="true" 
+						items="{ path: 'mGlobal>/OrderTypeSet', sorter: { path: 'AUART' } }"
+						busy="true">
+							<core:ListItem key="{mGlobal>AUART}" text="{mGlobal>AUART} - {mGlobal>TXT}"/>
+					</MultiComboBox>
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="Priority" label="{i18n>PRIORITY}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiComboBox 
+						id="in_Priority" 
+						showSecondaryValues="true" 
+						items="{ path: 'mGlobal>/PrioritySet', sorter: { path: 'AUART' } }"
+						busy="true">
+						<core:ListItem key="{mGlobal>PRIOK}" text="{mGlobal>PRIOKX}" additionalText="{mGlobal>PRIOK}"/>
+					</MultiComboBox>
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="Revision" label="{i18n>REVISION}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_Revision" showValueHelp="true" valueHelpRequest=".VH.onRevisionVH" maxLength='8' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="FunctLoc" label="{i18n>FUNCTIONAL_LOCATION}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_FunctLoc" showValueHelp="true" valueHelpRequest=".VH.onFunctLocVH" maxLength='30' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="Equipment" label="{i18n>EQUIPMENT}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_Equipment" showValueHelp="true" valueHelpRequest=".VH.onEquipmentVH" maxLength='18' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="MaintPlan" label="{i18n>MAINTENANCE_PLAN}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_MaintPlan" showValueHelp="true" valueHelpRequest=".VH.onMaintPlanVH"  maxLength='12' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="Planplant" label="{i18n>PLANPLANT}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_Planplant" showValueHelp="true" valueHelpRequest=".VH.onPlantVH" maxLength='4' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="PlSectn" label="{i18n>PLSECTN}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_PlSectn" showValueHelp="true" valueHelpRequest=".VH.onPlantSectionVH" maxLength='3' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="Plangroup" label="{i18n>PLANGROUP}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_Plangroup" showValueHelp="true" valueHelpRequest=".VH.onPlanGroupVH" maxLength='3' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="DueDate" label="{i18n>DueDate}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<DateRangeSelection id="in_DueDate" displayFormat="yyyy/MM/dd" />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="SystCond" label="{i18n>SYSTCOND}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_SystCond" showValueHelp="true" valueHelpRequest=".VH.onSystCondVH" maxLength='1' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="StatInclude" label="{i18n>StatInclude}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_StatInclude" showValueHelp="true" valueHelpRequest=".VH.onOrderStatVH" maxLength='4' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="StatExclude" label="{i18n>StatExclude}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_StatExclude" showValueHelp="true" valueHelpRequest=".VH.onOrderStatVH" maxLength='4' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="OperationStatInclude" label="{i18n>OperationStatInclude}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_OperationStatInclude" showValueHelp="true" valueHelpRequest=".VH.onOperationStatVH" maxLength='4' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="OperationStatExclude" label="{i18n>OperationStatExclude}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_OperationStatExclude" showValueHelp="true" valueHelpRequest=".VH.onOperationStatVH" maxLength='4' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+			<smartFilterBar:ControlConfiguration groupId="_ALL" key="OrderOperationSet/WorkCntr" label="{i18n>OperationWorkCntr}" visibleInAdvancedArea="true">
+				<smartFilterBar:customControl>
+					<MultiInput id="in_OperationWorkCntr" showValueHelp="true" valueHelpRequest=".VH.onWorkCntrVH" maxLength='8' />
+				</smartFilterBar:customControl>
+			</smartFilterBar:ControlConfiguration>
+			
+		</smartFilterBar:controlConfiguration>
+
+	</smartFilterBar:SmartFilterBar>
+
+
+</core:FragmentDefinition>

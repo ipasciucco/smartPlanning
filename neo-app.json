@@ -1,0 +1,75 @@
+{
+  "welcomeFile": "/webapp/index.html",
+  "routes": [
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/webapp/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/webapp/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/SAP_Gateway",
+      "target": {
+        "type": "destination",
+        "name": "SAP_Gateway"
+      },
+      "description": "SAP_Gateway"
+    },
+    {
+      "path": "/sap/opu/odata/",
+      "target": {
+        "type": "destination",
+        "name": "SAP_Gateway",
+        "entryPath": "/sap/opu/odata/"
+      },
+      "description": "SAP_Gateway"
+    },
+    {
+      "path": "ECC/sap/bc/",
+      "target": {
+        "type": "destination",
+        "name": "ECC",
+        "entryPath": "/sap/bc"
+      },
+      "description": "ERP direct /sap/bc"
+    },
+    {
+      "path": "/sap/fiori/orderdetails/",
+      "target": {
+        "type": "application",
+        "name": "orderdetails"
+      }
+    }
+  ],
+  "sendWelcomeFileRedirect": true
+}

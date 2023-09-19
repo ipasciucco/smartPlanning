@@ -1,0 +1,66 @@
+<mvc:View 
+	controllerName="com.blueboot.smartplanning.controller.Gantt" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	displayBlock="true"
+	xmlns:semantic="sap.f.semantic" 
+	xmlns="sap.ui.table"
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:gnt="sap.gantt"
+	xmlns:gnt-def="sap.gantt.def"
+	xmlns:gnt-pattern="sap.gantt.def.pattern"
+	xmlns:gnt-cal="sap.gantt.def.cal"
+	xmlns:axistime="sap.gantt.axistime"
+	xmlns:config="sap.gantt.config"
+	xmlns:shapes="sap.gantt.simple.shapes"
+	xmlns:gnt2="sap.gantt.simple"
+	xmlns:l="sap.ui.layout"
+	>
+
+	<semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false" showFooter="true" headerExpanded="true">
+		
+		<semantic:titleHeading>
+			<m:FlexBox alignItems="Center" justifyContent="Start">
+				<m:Button type="Up" iconFirst="true" iconDensityAware="true" press="onNavBack"/>
+				<m:Title text="{i18n>title}" level="H2"/>
+			</m:FlexBox>
+		</semantic:titleHeading>
+		
+		<semantic:titleCustomTextActions>
+			
+		</semantic:titleCustomTextActions>
+		
+		<semantic:messagesIndicator>
+			<semantic:MessagesIndicator id="MessagesIndicator" press="toggleMessagePopover" visible="{= ${message>/}.length > 0 }"/>
+		</semantic:messagesIndicator>
+
+		<semantic:footerCustomActions>
+			<m:Button text="Change" press="onGanttChange"></m:Button>
+			<!--Button text="Change" press="onChange" type="Emphasized" visible="{= !${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>/OrderSet}.length &amp;&amp; !!${mGlobal>/ChangeAuth} }" /-->
+		</semantic:footerCustomActions>
+
+		<semantic:headerContent>
+			
+		</semantic:headerContent>
+
+		<semantic:content>
+			
+			<gnt2:GanttChartContainer id="container">
+				
+				<gnt2:toolbar>
+					<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.Gantt.GanttToolbar" type="XML" id="GanttToolbar"/>
+				</gnt2:toolbar>
+				
+		
+				<gnt2:ganttCharts>
+					<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.Gantt.Gantt1" type="XML" id="Gantt1"/>
+					<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.Gantt.Gantt2" type="XML" id="Gantt2"/>
+				</gnt2:ganttCharts>
+		
+			</gnt2:GanttChartContainer>
+
+		</semantic:content>
+
+	</semantic:SemanticPage>
+
+</mvc:View>

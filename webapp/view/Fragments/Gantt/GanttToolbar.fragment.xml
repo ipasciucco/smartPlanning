@@ -1,0 +1,154 @@
+<core:FragmentDefinition 
+	xmlns:mvc="sap.ui.core.mvc" 
+	displayBlock="true"
+	xmlns:semantic="sap.f.semantic"
+	xmlns="sap.gantt.simple"
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:main="sap.ui.webc.main"
+	>	
+	
+
+			<ContainerToolbar
+				howDisplayTypeButton="true" 
+				id="containerToolbar" 
+				showSearchButton="false" 
+				stepCountOfSlider="4" 
+				showLegendButton="true" 
+				showSettingButton="false">
+						
+		
+			<legendContainer>
+				<LegendContainer height="430px" width="300px">
+						<ListLegend title="{i18n>ListLegend}">
+							
+							<ListLegendItem >
+								<legendShapeGroup>
+									<LegendShapeGroup orientation="Vertical" title="{i18n>ORDER}">
+										<shapes>
+											<BaseRectangle fill="#a8501c" height="30" width="30"/>
+										</shapes>
+									</LegendShapeGroup>
+								</legendShapeGroup>
+							</ListLegendItem>
+							
+							<ListLegendItem >
+								<legendShapeGroup>
+									<LegendShapeGroup orientation="Vertical" title="{i18n>OPERATION}">
+										<shapes>
+											<BaseRectangle fill="#0092D1" height="30" width="30"/>
+										</shapes>
+									</LegendShapeGroup>
+								</legendShapeGroup>
+							</ListLegendItem>
+							
+							<ListLegendItem >
+								<legendShapeGroup>
+									<LegendShapeGroup orientation="Vertical" title="{i18n>SUBOPERTION}">
+										<shapes>
+											<BaseRectangle fill="#3BB9EF" height="30" width="30"/>
+										</shapes>
+									</LegendShapeGroup>
+								</legendShapeGroup>
+							</ListLegendItem>
+							
+							<ListLegendItem >
+								<legendShapeGroup>
+									<LegendShapeGroup orientation="Vertical" title="{i18n>CONFIRMED_OPER}">
+										<shapes>
+											<BaseRectangle fill="#27AE60" height="30" width="30"/>
+										</shapes>
+									</LegendShapeGroup>
+								</legendShapeGroup>
+							</ListLegendItem>
+							
+							<ListLegendItem >
+								<legendShapeGroup>
+									<LegendShapeGroup orientation="Vertical" title="{i18n>CONFIRMED_SUBOPER}">
+										<shapes>
+											<BaseRectangle fill="#50D689" height="30" width="30"/>
+										</shapes>
+									</LegendShapeGroup>
+								</legendShapeGroup>
+							</ListLegendItem>
+							
+							<ListLegendItem >
+								<legendShapeGroup>
+									<LegendShapeGroup orientation="Vertical" title="{i18n>PART_CONFIRMED_OPER}">
+										<shapes>
+											<BaseRectangle fill="#F4D03F" height="30" width="30"/>
+										</shapes>
+									</LegendShapeGroup>
+								</legendShapeGroup>
+							</ListLegendItem>
+							
+							<ListLegendItem >
+								<legendShapeGroup>
+									<LegendShapeGroup orientation="Vertical" title="{i18n>PART_CONFIRMED_SUBOPER}">
+										<shapes>
+											<BaseRectangle fill="#FCE47E" height="30" width="30"/>
+										</shapes>
+									</LegendShapeGroup>
+								</legendShapeGroup>
+							</ListLegendItem>
+							
+							<ListLegendItem >
+								<legendShapeGroup>
+									<LegendShapeGroup orientation="Vertical" title="{i18n>CONSTRAINT}">
+										<shapes>
+											<BaseRectangle fill="#B207F2" height="30" width="30"/>
+										</shapes>
+									</LegendShapeGroup>
+								</legendShapeGroup>
+							</ListLegendItem>
+							
+			
+						</ListLegend>
+					</LegendContainer>
+			</legendContainer>
+			
+			<m:MenuButton id="gantMenu" text="Menu">
+				<m:menu>
+					<m:Menu itemSelected="onMenuAction">
+						<m:MenuItem text="{i18n>Preferences}"  icon="action-settings">
+							<m:items>
+								<m:MenuItem text="{i18n>TableP13n}" icon="sap-icon://edit" press="openTableP13n"/>
+								<m:MenuItem text="Mannage Variants" press="openVariantManagment" />
+								<m:MenuItem text="{= ${mGlobal>/ShapeTextVisible} ? ${i18n>HideShapeText} : ${i18n>ShowShapeText} }" press="toggleShapeTextVisible" />
+								<m:MenuItem text="{= ${mGlobal>/CursorLine} ? ${i18n>HideCursorLine} : ${i18n>ShowCursorLine} }" press="toggleCursoLine" />
+							</m:items>
+						</m:MenuItem>
+						<!--<m:MenuItem text="{i18n>ExpandAll}" icon="sap-icon://expand-all" press="onExpandAll"/>-->
+						<!--<m:MenuItem text="{i18n>CollapseAll}" icon="sap-icon://collapse-all" press="onCollapseAll"/>-->
+						<m:MenuItem text="{i18n>LinkOperations}" icon="sap-icon://chain-link" press="onLinkOperations" />
+						<m:MenuItem text="{i18n>DeleteRelations}" icon="sap-icon://broken-link" press="onDeleteLinkOperations" />
+						<m:MenuItem text="{i18n>MassChange}" icon="sap-icon://appointment" press="onMassDateOpen" />
+						<m:MenuItem text="{i18n>ExportPDF}" icon="sap-icon://pdf-attachment" press="onExportPDF" />
+						<m:MenuItem text="{i18n>RemoveConstraints}" icon="sap-icon://eraser" press="onRemoveConstraints" />
+						
+					</m:Menu>
+				</m:menu>
+			</m:MenuButton>
+
+			<!--<m:Button icon="sap-icon://action-settings" press="openTableP13n"></m:Button>-->
+			
+			<m:Button tooltip="{i18n>ExpandAll}" icon="sap-icon://expand-all" press="onExpandAll"></m:Button>
+			<m:Button tooltip="{i18n>CollapseAll}" icon="sap-icon://collapse-all" press="onCollapseAll"></m:Button>
+		
+			<m:DatePicker width="10rem" value="{ path: 'mGlobal>/StartDateGanttVisible', type: 'sap.ui.model.type.Date', formatOptions: {	style: 'long' }	}"  change="onGoToDate"/>
+			<m:Button tooltip="{i18n>RefreshAll}" icon="sap-icon://synchronize" press="onRefreshAll" class="sapUiLargeMarginEnd" ></m:Button>
+			
+			<!--<m:Button type="Accept" tooltip="{i18n>LinkOperations}" icon="sap-icon://chain-link" press="onLinkOperations" />-->
+			<!--<m:Button type="Reject" tooltip="{i18n>DeleteRelations}" icon="sap-icon://broken-link" press="onDeleteLinkOperations" />-->
+			
+			
+			<!--<m:Button icon="sap-icon://appointment" text="{i18n>MassChange}" press="onMassDateOpen" class="sapUiLargeMarginEnd"/>-->
+			
+			<!--<m:Button icon="sap-icon://pdf-attachment" text="{i18n>ExportPDF}" press="onExportPDF"/>-->
+			
+			<!--<m:ToggleButton text="{i18n>ShapesTexts}" enabled="true" pressed="{mGlobal>/ShapeTextVisible}" />-->
+			
+		</ContainerToolbar>
+	
+	
+</core:FragmentDefinition>

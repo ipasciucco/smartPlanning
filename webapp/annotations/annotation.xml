@@ -1,0 +1,243 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+	<edmx:Reference Uri="/SAP_Gateway/sap/opu/odata/BLUEBOOT/PM_SRV/$metadata">
+		<edmx:Include Alias="PM_SRV" Namespace="BLUEBOOT.PM_SRV"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+		<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="smartplanning.annotations.annotation.BLUEBOOT.PM_SRV">
+
+			<Annotations Target="PM_SRV.Order/UserResponsible">
+				<Annotation Term="Common.IsUpperCase" Bool="true"/>
+				<Annotation Term="Common.Label" String="{@i18n&gt;USERNAME}"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="UserSet"/>
+						<PropertyValue Property="SearchSupported" Bool="false"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="UserResponsible"/>
+									<PropertyValue Property="ValueListProperty" String="Username"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="FirstName"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="LastName"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.User/Username">
+				<Annotation Term="Common.IsUpperCase" Bool="true"/>
+				<Annotation Term="Common.Label" String="{@i18n&gt;USERNAME}"/>
+			</Annotations>
+			<Annotations Target="PM_SRV.User/FirstName">
+				<Annotation Term="Common.Label" String="{@i18n&gt;NAME_FIRST}"/>
+			</Annotations>
+			<Annotations Target="PM_SRV.User/LastName">
+				<Annotation Term="Common.Label" String="{@i18n&gt;NAME_LAST}"/>
+			</Annotations>
+			
+			<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+			
+			<Annotations Target="PM_SRV.Order/PersonResponsible">
+				<Annotation Term="Common.Label" String="{@i18n&gt;PERSON_NUMBER}"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="PersonSet"/>
+						<PropertyValue Property="SearchSupported" Bool="false"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="PersonResponsible"/>
+									<PropertyValue Property="ValueListProperty" String="Pernr"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="Stext"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.Person/Pernr">
+				<Annotation Term="Common.Label" String="{@i18n&gt;PERNR}"/>
+			</Annotations>
+			<Annotations Target="PM_SRV.Person/Stext">
+				<Annotation Term="Common.Label" String="{@i18n&gt;STEXT}"/>
+			</Annotations>
+			
+			<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+			<Annotations Target="PM_SRV.Order/Plant">
+				
+				<Annotation Term="Common.IsUpperCase" Bool="true"/>
+				
+				<Annotation Term="Common.Text">
+					<Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextLast"/>
+				</Annotation>
+				
+				<!--<Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>-->
+				<Annotation Term="Common.Label" String="{@i18n&gt;PLANT}"/>
+				
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="PlantSet"/>
+						<PropertyValue Property="SearchSupported" Bool="false"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="Plant"/>
+									<PropertyValue Property="ValueListProperty" String="Werks"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="Name1"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.Plant/Werks">
+				<Annotation Term="Common.Text" Path="Name1"/>
+				<Annotation Term="Common.Label" String="{@i18n&gt;WERKS}"/>
+			</Annotations>
+			<Annotations Target="PM_SRV.Plant/Name1">
+				<Annotation Term="Common.Label" String="{@i18n&gt;NAME1}"/>
+			</Annotations>
+			
+			<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+			<Annotations Target="PM_SRV.Order/MnWkCtr">
+				
+				 <!--Para q muestre el texto con el ID -->
+				<!--<Annotation Term="Common.Text">-->
+				<!--	<Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextLast"/>-->
+				<!--</Annotation>-->
+				
+				<!--Para q sea tipo ComboBox-->
+				<!--<Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>-->
+				<Annotation Term="Common.Label" String="{@i18n&gt;WORK_CENTER}"/>
+				
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="WorkCenterSet"/>
+						<PropertyValue Property="SearchSupported" Bool="false"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="MnWkCtr"/>
+									<PropertyValue Property="ValueListProperty" String="Arbpl"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="Ktext"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="Werks"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.WorkCenter/Arbpl">
+				<!--Para indicar cual es el Texto del ID-->
+				<Annotation Term="Common.Text" Path="Ktext"/>
+				<Annotation Term="Common.IsUpperCase" Bool="true"/>
+				<Annotation Term="Common.Label" String="{@i18n&gt;WORK_CENTER}"/>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.WorkCenter/Ktext">
+				<Annotation Term="Common.Label" String="{@i18n&gt;DESCRIPTION}"/>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.WorkCenter/Werks">
+				<Annotation Term="Common.Label" String="{@i18n&gt;PLANT}"/>
+			</Annotations>
+			
+			<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+			
+			<Annotations Target="PM_SRV.Order/FunctLoc">
+				<Annotation Term="Common.Label" String="{@i18n&gt;FUNCTIONAL_LOCATION}"/>
+				<Annotation Term="Common.IsUpperCase" Bool="true"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="FuncLocSet"/>
+						<PropertyValue Property="SearchSupported" Bool="false"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="FunctLoc"/>
+									<PropertyValue Property="ValueListProperty" String="Functlocation"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="Descript"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.FuncLoc/Functlocation">
+				<Annotation Term="Common.Label" String="{@i18n&gt;FUNCTIONAL_LOCATION}"/>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.FuncLoc/Descript">
+				<Annotation Term="Common.Label" String="{@i18n&gt;DESCRIPTION}"/>
+			</Annotations>
+			
+			<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+			
+			<Annotations Target="PM_SRV.Order/Revision">
+				<Annotation Term="Common.Label" String="{@i18n&gt;REVISION}"/>
+				<Annotation Term="Common.IsUpperCase" Bool="true"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="RevisionSet"/>
+						<PropertyValue Property="SearchSupported" Bool="false"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="Revision"/>
+									<PropertyValue Property="ValueListProperty" String="Revnr"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="Iwerk"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="Revtx"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.Revision/Revnr">
+				<Annotation Term="Common.Label" String="{@i18n&gt;REVISION}"/>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.Revision/Iwerk">
+				<Annotation Term="Common.Label" String="{@i18n&gt;PLANT}"/>
+			</Annotations>
+			
+			<Annotations Target="PM_SRV.Revision/Revtx">
+				<Annotation Term="Common.Label" String="{@i18n&gt;DESCRIPTION}"/>
+			</Annotations>
+			
+			
+		</Schema>
+		
+	</edmx:DataServices>
+</edmx:Edmx>

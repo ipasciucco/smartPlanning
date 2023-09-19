@@ -1,0 +1,673 @@
+<core:FragmentDefinition 
+	controllerName="com.blueboot.smartplanning.controller.Worklist" 
+	xmlns="sap.m"
+	xmlns:table="sap.ui.table"
+	xmlns:core="sap.ui.core"
+	xmlns:vm="sap.ui.comp.variants"
+	>
+
+	<table:Table
+		id="orderTable"
+		rows="{ path: 'mGlobal>/OrderSet' }"
+		minAutoRowCount="1"
+		selectionMode="None"
+		visibleRowCountMode="Auto"
+		enableCellFilter="true"
+		filter="onCellFitler"
+		visible="{= ${mGlobal>/ObjectTab} === 'order' ? true : false }"
+		rowHeight="40"
+		fixedColumnCount='1'
+		>
+	
+		<table:layoutData>
+				<FlexItemData growFactor="1"/>
+			</table:layoutData>
+		
+		<table:rowSettingsTemplate>
+			<table:RowSettings highlight="{= ( !!${mGlobal>/EditMode} ) ? ${mGlobal>EditedValue/rowColor} : 'None' }" />
+		</table:rowSettingsTemplate>
+		
+		<table:rowActionTemplate>
+			<table:RowAction />
+		</table:rowActionTemplate>
+		
+		<table:extension>
+			<OverflowToolbar style="Clear">
+				
+				<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.Worklist.TableToolbar" type="XML" id="buttonsViewTable"/>
+				<ToolbarSpacer/>
+				<vm:VariantManagement id='VMOrder' 
+					standardItemText="{i18n>standardItemText}" 
+					visible="{= !${mGlobal>/EditMode} }" />
+				<Button icon="sap-icon://action-settings" 
+					press="onP13nTable" 
+					 visible="{= !${mGlobal>/EditMode} }"/>
+				<Button icon="sap-icon://excel-attachment" 
+					press="onExcel"/>
+			</OverflowToolbar>
+		</table:extension>
+	
+		<table:columns>
+			
+			<table:Column
+				width='{mGlobal>/TableWidth/Order/OrderCol_Selected}' 
+				visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }"
+				id="OrderCol_Selected"
+				>
+				<table:template>
+					<CheckBox selected="{mGlobal>Selected}" />
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Orderid}' 
+				filterProperty="Orderid" 
+				sortProperty="Orderid"
+				name="{i18n>ORDER}"
+				id="OrderCol_Orderid"
+				>
+				<Label text="{i18n>ORDER}" />
+				<table:template>
+					<Link text="{mGlobal>Orderid}" press=".onPressOrder"/>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Notes}' 
+				name="{i18n>NOTES}"
+				visible="{= !${mGlobal>/EditMode} }"
+				id="OrderCol_Notes"
+				>
+				<Label text="{i18n>NOTES}"/>
+				<table:template>
+					<VBox>
+						<core:Icon
+							src="sap-icon://notes"
+							class="iconSize"
+							color="{= !!${mGlobal>OrderPersonalNoteSet/Text} ? '#427CAC' : '#BFBFBF' }"
+							press='.onNotePress'
+							>
+							<core:layoutData>
+								<FlexItemData growFactor="1" />
+							</core:layoutData>
+						</core:Icon>
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_ShortText}' 
+				id="OrderCol_ShortText"
+				filterProperty="ShortText" 
+				sortProperty="ShortText"
+				name="{i18n>SHORT_TEXT}"
+				>
+				<Label text="{i18n>SHORT_TEXT}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>ShortText}"  visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }"/>
+						<Input value='{mGlobal>EditedValue/ShortText}' visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }" change="checkChangeColor" maxLength = "40" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column
+				width='{mGlobal>/TableWidth/Order/OrderCol_Permit}' 
+				name="{i18n>PERMITS}"
+				visible="{= !${mGlobal>/EditMode} }"
+				id="OrderCol_Permit"
+				>
+				<Label text="{i18n>PERMITS}"/>
+				<table:template>
+					<!--<Link text="{i18n>PERMITS}" press=".onPermitPress" visible="{= ${mGlobal>OrderPermitSet/results}.length > 0 }"/>-->
+					<ObjectStatus
+						text="{i18n>PERMITS}"
+						active="true"
+						press=".onPermitPress"
+						state="{= ${ parts: ['mGlobal>OrderPermitSet/results'], formatter: '.formatter.allPermitsAproved' } ? 'Success' : 'Error' }"
+						icon="{= ${ parts: ['mGlobal>OrderPermitSet/results'], formatter: '.formatter.allPermitsAproved' } ? 'sap-icon://sys-enter-2' : 'sap-icon://error' }"
+						visible="{= ${mGlobal>OrderPermitSet/results}.length > 0 }"
+						/>
+				</table:template>
+			</table:Column>
+			
+			<table:Column
+				width='{mGlobal>/TableWidth/Order/OrderCol_OrderType}' 
+				filterProperty="OrderType"
+				sortProperty="OrderType"
+				name="{i18n>ORDER_TYPE}"
+				id="OrderCol_OrderType"
+				>
+				<Label text="{i18n>ORDER_TYPE}"/>
+				<table:template>
+					<Text text="{mGlobal>OrderType}" />
+				</table:template>
+				
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Priority}' 
+				filterProperty="Priority" 
+				sortProperty="Priority"
+				name="{i18n>PRIORITY}"
+				id="OrderCol_Priority"
+				>
+				<Label text="{i18n>PRIORITY}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>Priority}" visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }"/>
+						<ComboBox 
+							items="{ path: 'mGlobal>/PrioritySet', sorter: { path: 'AUART' } }"
+							selectedKey="{mGlobal>EditedValue/Priority}" 
+							showSecondaryValues="true" 
+							visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }"
+							change="checkChangeColor" 
+							>
+							<core:ListItem key="{mGlobal>PRIOK}" text="{mGlobal>PRIOKX}" additionalText="{mGlobal>PRIOK}"/>
+						</ComboBox>
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_MnWkCtr}' 
+				filterProperty="MnWkCtr"
+				sortProperty="MnWkCtr"
+				name="{i18n>WORK_CENTER}"
+				id="OrderCol_MnWkCtr"
+				>
+				<Label text="{i18n>WORK_CENTER}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>MnWkCtr}" visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }"/>
+						<Input value="{mGlobal>EditedValue/MnWkCtr}" showValueHelp="true" visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }" valueHelpRequest=".VH.onWorkCntrVH" change="checkChangeColor" maxLength = "8" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Plant}' 
+				filterProperty="Plant"
+				sortProperty="Plant"
+				name="{i18n>PLANT}"
+				id="OrderCol_Plant"
+				>
+				<Label text="{i18n>PLANT}"/>
+				<table:template>
+					<Text text="{mGlobal>Plant}" />
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_MaintPlan}' 
+				filterProperty="MaintPlan"
+				sortProperty="MaintPlan"
+				name="{i18n>MAINTENANCE_PLAN}"
+				id="OrderCol_MaintPlan"
+				>
+				<Label text="{i18n>MAINTENANCE_PLAN}"/>
+				<table:template>
+					<Link text="{mGlobal>MaintPlan}" press=".onPressMaintPlan"/>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_FunctLoc}' 
+				filterProperty="FunctLoc"
+				sortProperty="FunctLoc"
+				name="{i18n>FUNCTIONAL_LOCATION}"
+				id="OrderCol_FunctLoc"
+				>
+				<Label text="{i18n>FUNCTIONAL_LOCATION}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>FunctLoc}" visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }"/>
+						<Input value="{mGlobal>EditedValue/FunctLoc}" showValueHelp="true" visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }" valueHelpRequest=".VH.onFunctLocVH" change="checkChangeColor" maxLength="30"/>
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Equipment}' 
+				filterProperty="Equipment"
+				sortProperty="Equipment"
+				name="{i18n>EQUIPMENT}"
+				id="OrderCol_Equipment"
+				>
+				<Label text="{i18n>EQUIPMENT}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>Equipment}" visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }"/>
+						<Input value="{mGlobal>EditedValue/Equipment}" showValueHelp="true" visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }" valueHelpRequest=".VH.onEquipmentVH" change="checkChangeColor" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_StatProf}' 
+				filterProperty="StatProf" 
+				sortProperty="StatProf" 
+				name="{i18n>StatProf}"
+				id="OrderCol_StatProf"
+				>
+				<Label text="{i18n>StatProf}"/>
+				<table:template>
+					<ObjectStatus text="{mGlobal>StatProf}" />
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Userstatus}' 
+				filterProperty="Userstatus"
+				sortProperty="Userstatus"
+				name="{i18n>USER_STATUS}"
+				id="OrderCol_Userstatus"
+				>
+				<Label text="{i18n>USER_STATUS}"/>
+				<table:template>
+					<VBox>
+						<ObjectStatus text="{mGlobal>Userstatus}" visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }" />
+						<MultiComboBox
+							width="350px"
+							items="{
+								path: 'mGlobal>EditedValue/UserStatusChanges',
+								sorter: { path: 'Txt04' }
+							}"
+							visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }">
+							<core:Item key="{mGlobal>Txt04}" text="{mGlobal>Txt04} - {mGlobal>Txt30}"/>
+						</MultiComboBox>
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_SysStatus}' 
+				filterProperty="SysStatus" 
+				name="{i18n>SYSTEM_STATUS}"
+				id="OrderCol_SysStatus"
+				>
+				<Label text="{i18n>SYSTEM_STATUS}"/>
+				<table:template>
+					<ObjectStatus text="{mGlobal>SysStatus}" state="{= RegExp('(REVI|RECH)', 'i').test(${mGlobal>SysStatus}) ? 'Warning' : 'Success' }"/>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_DueDate}' 
+				sortProperty="DueDate" 
+				name="{i18n>DUE_DATE}"
+				id="OrderCol_DueDate"
+				>
+				<Label text="{i18n>DUE_DATE}"/>
+				<table:template>
+					<VBox>
+						<Text text="{ parts: ['mGlobal>DueDate'], formatter: '.formatter.formatDate' }" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Revision}' 
+				filterProperty="Revision" 
+				sortProperty="Revision" 
+				name="{i18n>REVISION}"
+				id="OrderCol_Revision"
+				>
+				<Label text="{i18n>REVISION}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>Revision}" visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }"/>
+						<Input value="{mGlobal>EditedValue/Revision}" showValueHelp="true" visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }" valueHelpRequest=".VH.onRevisionVH" change="checkChangeColor" maxLength="8"/>
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_StartDate}' 
+				sortProperty="StartDate" 
+				name="{i18n>basic-start}"
+				id="OrderCol_StartDate"
+				>
+				<Label text="{i18n>basic-start}"/>
+				<table:template>
+					<VBox>
+						<Text text="{ parts: ['mGlobal>StartDate'], formatter: '.formatter.formatDate' }" visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }"/>
+						<DatePicker
+							placeholder="yyyyMMdd"
+							class="sapUiSmallMarginBottom"
+							value="{mGlobal>EditedValue/StartDate}" 
+							valueFormat="yyyyMMdd"
+							visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }" 
+							change="checkChangeColor" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column
+				width='{mGlobal>/TableWidth/Order/OrderCol_FinishDate}' 
+				sortProperty="FinishDate" 
+				name="{i18n>basic-finish}"
+				id="OrderCol_FinishDate"
+				>
+				<Label text="{i18n>basic-finish}"/>
+				<table:template>
+					<VBox>
+						<Text text="{ parts: ['mGlobal>FinishDate'], formatter: '.formatter.formatDate' }" visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }"/>
+						<DatePicker
+							placeholder="yyyyMMdd"
+							class="sapUiSmallMarginBottom"
+							value="{mGlobal>EditedValue/FinishDate}" 
+							valueFormat="yyyyMMdd"
+							visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }"
+							change="checkChangeColor" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_isReleased}' 
+				sortProperty="isReleased" 
+				name="{i18n>IS_RELASED}"
+				id="OrderCol_isReleased"
+				>
+				<Label text="{i18n>IS_RELASED}"/>
+				<table:template>
+					<VBox>
+						<ObjectStatus
+							visible="{= !!${mGlobal>isReleased} }"
+							class="sapUiSmallMarginBottom"
+							text="{path: 'mGlobal>isReleased', formatter: '.formatter.YesNo'}"
+							icon="sap-icon://flag"
+							state="Success" />
+						<ObjectStatus
+							visible="{= !${mGlobal>isReleased} }"
+							class="sapUiSmallMarginBottom"
+							text="{path: 'mGlobal>isReleased', formatter: '.formatter.YesNo'}"
+							icon="sap-icon://flag-2"
+							state="Error" />
+					</VBox> 
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_PersonResponsible}' 
+				filterProperty="PersonResponsible" 
+				sortProperty="PersonResponsible" 
+				name="{i18n>RESPONSIBLE}"
+				id="OrderCol_PersonResponsible"
+				>
+				<Label text="{i18n>RESPONSIBLE}"/>
+				<table:template>
+					<VBox>
+						<VBox visible="{= !${mGlobal>/EditMode} || !${mGlobal>EditedValue} }">
+							<Text text="{mGlobal>PersonResponsible}" visible="{= ${mGlobal>PersonResponsible}.length &gt; 0 }"/>
+							<ObjectStatus text="{i18n>NOT_ASSIGNED}" visible="{= ${mGlobal>PersonResponsible}.length === 0}" state="Warning"/>
+						</VBox>
+					
+						<Input value="{mGlobal>EditedValue/PersonResponsible}" showValueHelp="true" visible="{= !!${mGlobal>/EditMode} &amp;&amp; !!${mGlobal>EditedValue} }" valueHelpRequest=".VH.onPersonResponsibleVH" change="checkChangeColor" maxLength="12" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column  
+				width='{mGlobal>/TableWidth/Order/OrderCol_ATP}' 
+				name="{i18n>ATP}"
+				id="OrderCol_ATP"
+				>
+				<Label text="{i18n>ATP}"/>
+				<table:template>
+					<VBox>
+						
+						<ObjectStatus
+							class="sapUiSmallMarginBottom"
+							text="{i18n>no-components}"
+							state="None" 
+							visible="{= ${mGlobal>OrderATPMessagesSet}.results.length === 0 }"/>
+						
+						<VBox visible="{ parts: ['mGlobal>OrderATPMessagesSet/results'], formatter: '.formatter.ATPErrorExists' }">
+							<ObjectStatus
+								class="sapUiSmallMarginBottom"
+								text="{i18n>atp-error}"
+								icon="sap-icon://error"
+								state="Error" 
+								press='.ATPError'
+								active="true"
+								/>
+								
+							<!--<Link text=' View'  press='.ATPError' />-->
+						</VBox>
+						
+						<ObjectStatus
+							class="sapUiSmallMarginBottom"
+							text="{i18n>atp-ok}"
+							icon="sap-icon://sys-enter-2"
+							state="Success"
+							visible="{ parts: ['mGlobal>OrderATPMessagesSet/results'], formatter: '.formatter.ATPNoErrorExists' }"
+							/>
+							
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Planplant}' 
+				sortProperty="Planplant"
+				filterProperty="Planplant" 
+				name="{i18n>PLANPLANT}"
+				id="OrderCol_Planplant"
+				>
+				<Label text="{i18n>PLANPLANT}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>Planplant}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_PlSectn}' 
+				sortProperty="PlSectn" 
+				name="{i18n>PLSECTN}"
+				id="OrderCol_PlSectn"
+				>
+				<Label text="{i18n>PLSECTN}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>PlSectn}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Plangroup}' 
+				sortProperty="Plangroup" 
+				filterProperty="Plangroup" 
+				name="{i18n>PLANGROUP}"
+				id="OrderCol_Plangroup"
+				>
+				<Label text="{i18n>PLANGROUP}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>Plangroup}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_SystCond}' 
+				sortProperty="SystCond" 
+				filterProperty="SystCond" 
+				name="{i18n>SYSTCOND}"
+				id="OrderCol_SystCond"
+				>
+				<Label text="{i18n>SYSTCOND}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>SystCond}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_NotifNo}' 
+				sortProperty="NotifNo" 
+				filterProperty="NotifNo" 
+				name="{i18n>NotifNo}"
+				id="OrderCol_NotifNo"
+				visible="false"
+				>
+				<Label text="{i18n>NotifNo}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>NotifNo}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Abcindic}' 
+				sortProperty="Abcindic" 
+				filterProperty="Abcindic" 
+				name="{i18n>Abcindic}"
+				id="OrderCol_Abcindic"
+				visible="false"
+				>
+				<Label text="{i18n>Abcindic}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>Abcindic}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Costcenter}' 
+				sortProperty="Costcenter" 
+				filterProperty="Costcenter" 
+				name="{i18n>Costcenter}"
+				id="OrderCol_Costcenter"
+				visible="false"
+				>
+				<Label text="{i18n>Costcenter}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>Costcenter}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_CreatedBy}' 
+				sortProperty="CreatedBy" 
+				filterProperty="CreatedBy" 
+				name="{i18n>CreatedBy}"
+				id="OrderCol_CreatedBy"
+				visible="false"
+				>
+				<Label text="{i18n>CreatedBy}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>CreatedBy}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_EnterDate}' 
+				sortProperty="EnterDate" 
+				filterProperty="EnterDate" 
+				name="{i18n>EnterDate}"
+				id="OrderCol_EnterDate"
+				visible="false"
+				>
+				<Label text="{i18n>EnterDate}"/>
+				<table:template>
+					<VBox>
+						<Text text="{ parts: ['mGlobal>EnterDate'], formatter: '.formatter.formatDate' }"/>
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_RespCCtr}' 
+				sortProperty="RespCCtr" 
+				filterProperty="RespCCtr" 
+				name="{i18n>RespCCtr}"
+				id="OrderCol_RespCCtr"
+				visible="false"
+				>
+				<Label text="{i18n>RespCCtr}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>RespCCtr}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Pmacttype}' 
+				sortProperty="Pmacttype" 
+				filterProperty="Pmacttype" 
+				name="{i18n>Pmacttype}"
+				id="OrderCol_Pmacttype"
+				visible="false"
+				>
+				<Label text="{i18n>Pmacttype}"/>
+				<table:template>
+					<VBox>
+						<Text text="{mGlobal>Pmacttype}" />
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_ProductionStartDate}' 
+				sortProperty="ProductionStartDate" 
+				filterProperty="ProductionStartDate" 
+				name="{i18n>ProductionStartDate}"
+				id="OrderCol_ProductionStartDate"
+				visible="false"
+				>
+				<Label text="{i18n>ProductionStartDate}" />
+				<table:template>
+					<VBox>
+						<Text text="{ parts: ['mGlobal>ProductionStartDate'], formatter: '.formatter.formatDate' }"/>
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_ProductionFinishDate}' 
+				sortProperty="ProductionFinishDate" 
+				filterProperty="ProductionFinishDate" 
+				name="{i18n>ProductionFinishDate}"
+				id="OrderCol_ProductionFinishDate"
+				visible="false"
+				>
+				<Label text="{i18n>ProductionFinishDate}"/>
+				<table:template>
+					<VBox>
+						<Text text="{ parts: ['mGlobal>ProductionFinishDate'], formatter: '.formatter.formatDate' }"/>
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+			<table:Column 
+				width='{mGlobal>/TableWidth/Order/OrderCol_Age}' 
+				name="{i18n>Age}"
+				id="OrderCol_Age"
+				visible="false"
+				>
+				<Label text="{i18n>Age}"/>
+				<table:template>
+					<VBox>
+						<Text text="{ parts: ['mGlobal>EnterDate'], formatter: '.formatter.alcAge' }"/>
+					</VBox>
+				</table:template>
+			</table:Column>
+			
+		</table:columns>
+			
+	</table:Table>
+
+</core:FragmentDefinition>

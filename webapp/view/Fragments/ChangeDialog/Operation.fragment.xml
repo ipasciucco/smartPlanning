@@ -1,0 +1,204 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout" 
+	>
+	
+	<MessageStrip
+		text="{i18n>StatProfWarning}"
+		showIcon="true"
+		class="sapUiMediumMarginBottom"
+		visible="{= !${mGlobal>/StatProfOperation} }" />
+
+	<f:Form editable="true" width="50rem" >
+		<f:layout>
+			<f:ColumnLayout
+				columnsM="1"
+				columnsL="1"
+				columnsXL="1" />
+		</f:layout>
+		
+		<f:formContainers>
+			
+			<f:FormContainer>
+				
+				<f:formElements>
+					
+					<f:FormElement label="{i18n>SHORT_TEXT}" visible="{mGlobal>/ChangeSettings/Operation/Description}">
+						<f:fields>
+							<Input maxLength="40" value="{mGlobal>/Changes/Operation/Description}" /> 
+						</f:fields>
+					</f:FormElement>
+
+					<f:FormElement label="{i18n>MUST_START_ON}" visible="{mGlobal>/ChangeSettings/Operation/StartCons}">
+						<f:fields>
+							<DatePicker
+								placeholder="yyyyMMdd"
+								class="sapUiSmallMarginBottom"
+								value="{mGlobal>/Changes/Operation/StartCons}" 
+								valueFormat="yyyyMMdd"/>
+							<TimePicker
+								placeholder="hh:mm:ss"
+								class="sapUiSmallMarginBottom"
+								value="{mGlobal>/Changes/Operation/StrtTimCon}" 
+								valueFormat="HHmmss"/>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>MUST_FIN_ON}" visible="{mGlobal>/ChangeSettings/Operation/FinCons}">
+						<f:fields>
+							<DatePicker
+								placeholder="yyyyMMdd"
+								class="sapUiSmallMarginBottom"
+								value="{mGlobal>/Changes/Operation/FinCons}" 
+								valueFormat="yyyyMMdd"/>
+							<TimePicker
+								placeholder="hh:mm:ss"
+								class="sapUiSmallMarginBottom"
+								value="{mGlobal>/Changes/Operation/FinTimCons}" 
+								valueFormat="HHmmss"/>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>ADJUST_SUBSEQUENT}" visible="false">
+						<f:fields>
+							<CheckBox text="{i18n>ADJUST_SUBSEQUENT}" selected="{mGlobal>/Changes/Operation/Adjust}" />
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>WORK_CENTER}" visible="{mGlobal>/ChangeSettings/Operation/WorkCntr}">
+						<f:fields>
+							<Input value="{mGlobal>/Changes/Operation/WorkCntr}" showValueHelp="true" valueHelpRequest=".VH.onWorkCntrVH"  />
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>CONTROL_KEY}" visible="{mGlobal>/ChangeSettings/Operation/ControlKey}">
+						<f:fields>
+							<Input value="{mGlobal>/Changes/Operation/ControlKey}" showValueHelp="true" valueHelpRequest=".VH.onControlKeyVH"  />
+						</f:fields>
+					</f:FormElement>
+							
+					<f:FormElement label="{i18n>RESPONSIBLE}" visible="{mGlobal>/ChangeSettings/Operation/PersonResponsible}">
+						<f:fields>
+							<Input value="{mGlobal>/Changes/Operation/PersNo}" description="Clear" fieldWidth="83%" enabled="{= !${mGlobal>/Changes/Operation/ClearPersNo} }" showValueHelp="true" valueHelpRequest=".VH.onPersonResponsibleVH"  />
+							<CheckBox selected="{mGlobal>/Changes/Operation/ClearPersNo}" />
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>add-user-status}" visible="{mGlobal>/ChangeSettings/Operation/AddUserStatus}">
+						<f:fields>
+							<MultiComboBox
+								id="ADD_UserStatus_Operation"
+								showClearIcon="true"
+								width="350px"
+								items="{
+									path: 'mGlobal>/OperationUserStatusFiltered',
+									sorter: { path: 'Name' }
+								}">
+								<core:Item key="{mGlobal>Txt04}" text="{mGlobal>Txt04} - {mGlobal>Txt30}"/>
+							</MultiComboBox>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>delete-user-status}" visible="{mGlobal>/ChangeSettings/Operation/DeleteUserStatus}">
+						<f:fields>
+							<MultiComboBox
+								id="DELETE_UserStatus_Operation"
+								showClearIcon="true"
+								width="350px"
+								items="{
+									path: 'mGlobal>/OperationUserStatusFiltered',
+									sorter: { path: 'Name' }
+								}">
+								<core:Item key="{mGlobal>Txt04}" text="{mGlobal>Txt04} - {mGlobal>Txt30}"/>
+							</MultiComboBox>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>ACTIVITY_TYPE}" visible="{mGlobal>/ChangeSettings/Operation/Acttype}">
+						<f:fields>
+							<Input maxLength="6" value="{mGlobal>/Changes/Operation/Acttype}" width="350px"/> 
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>CalcKey}" visible="{mGlobal>/ChangeSettings/Operation/CalcKey}">
+						<f:fields>
+							<ComboBox 
+								width="350px"
+								showSecondaryValues="true" 
+								items="{ path: 'mGlobal>/CalcKeySet', sorter: { path: 'Indet' } }"
+								selectedKey="{mGlobal>/Changes/Operation/CalcKey}" >
+								<core:ListItem key="{mGlobal>Indet}" text="{mGlobal>Description}" additionalText="{mGlobal>Indet}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>WORK_ACTIVITY}" visible="{mGlobal>/ChangeSettings/Operation/CalcKey}">
+						<f:fields>
+							<Input 
+								id="inWorkActivity" 
+								type="Number" 
+								value="{mGlobal>/Changes/Operation/Work}" 
+								width="100%"
+								enabled="{= ${mGlobal>/Changes/Operation/CalcKey} === '0' || ${mGlobal>/Changes/Operation/CalcKey} === '1' || ${mGlobal>/Changes/Operation/CalcKey} === '3' }"
+								/>
+							<ActionSelect 
+								items="{ 
+									path: 'mGlobal>/TimeMeasUnitSet', sorter: { path: 'MSEHI' } 
+								}" 
+								width="7rem" 
+								forceSelection="false" 
+								selectedKey="{mGlobal>/Changes/Operation/UnWork}"
+								enabled="{= ${mGlobal>/Changes/Operation/CalcKey} === '0' || ${mGlobal>/Changes/Operation/CalcKey} === '1' || ${mGlobal>/Changes/Operation/CalcKey} === '3' }"
+								>
+								<items>
+									<core:Item key="{mGlobal>MSEH3}" text="{mGlobal>MSEH3}"/>
+								</items>
+							</ActionSelect>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>Count}" visible="{mGlobal>/ChangeSettings/Operation/CalcKey}">
+						<f:fields>
+							<Input 
+								id="inCapacities" 
+								type="Number" 
+								value="{mGlobal>/Changes/Operation/Count}" 
+								width="3em"
+								enabled="{= ${mGlobal>/Changes/Operation/CalcKey} === '0' || ${mGlobal>/Changes/Operation/CalcKey} === '1' || ${mGlobal>/Changes/Operation/CalcKey} === '2' }"
+								/>
+						</f:fields>
+					</f:FormElement>
+					
+					<f:FormElement label="{i18n>OPERATION_DURATION}" visible="{mGlobal>/ChangeSettings/Operation/CalcKey}">
+						<f:fields>
+							<Input 
+								id="inOperationDuration" 
+								type="Number" 
+								value="{mGlobal>/Changes/Operation/Duration}" 
+								width="100%"
+								enabled="{= ${mGlobal>/Changes/Operation/CalcKey} === '0' || ${mGlobal>/Changes/Operation/CalcKey} === '2' || ${mGlobal>/Changes/Operation/CalcKey} === '3' }"
+								/>
+							<ActionSelect 
+								items="{ 
+									path: 'mGlobal>/TimeMeasUnitSet', sorter: { path: 'MSEHI' } 
+								}" 
+								width="7rem" 
+								forceSelection="false" 
+								selectedKey="{mGlobal>/Changes/Operation/DurationNormalUnit}"
+								enabled="{= ${mGlobal>/Changes/Operation/CalcKey} === '0' || ${mGlobal>/Changes/Operation/CalcKey} === '2' || ${mGlobal>/Changes/Operation/CalcKey} === '3' }"
+								>
+								<items>
+									<core:Item key="{mGlobal>MSEH3}" text="{mGlobal>MSEH3}"/>
+								</items>
+							</ActionSelect>
+						</f:fields>
+					</f:FormElement>
+							
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+				
+</core:FragmentDefinition>

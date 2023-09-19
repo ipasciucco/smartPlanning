@@ -1,0 +1,46 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout" 
+	>
+	<Dialog id="ChangeDialog" title="{i18n>CHANGE}">
+		<customHeader>
+			<Bar>				
+				<contentLeft>
+					<Title text="{i18n>CHANGE}" level="H2"/>
+				</contentLeft>
+				<contentRight>
+					<Button icon="sap-icon://action-settings" press="onChangeSettings" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<buttons>
+			<Button text="{i18n>SAVE}" press="changeSave" type="Accept"/>
+			<Button text="{i18n>CANCEL}" press="changeClose" type="Reject"/>
+		</buttons>
+		<content>
+			
+			<IconTabHeader mode="Inline" selectedKey='{mGlobal>/ChangeObjectTab}' >
+				<items>
+					<IconTabFilter key="order" text="{i18n>ORDERS}" visible="{mGlobal>/ChangeSettings/Order/ObjectTab}"/>
+					<IconTabFilter key="operation" text="{i18n>OPERATIONS}" visible="{= ${mGlobal>/ObjectTab} === 'operation' &amp;&amp; ${mGlobal>/ChangeSettings/Operation/ObjectTab}  }" />  
+					<IconTabFilter key="personalnote" text="{i18n>personalnote}" visible="{mGlobal>/ChangeSettings/PersonalNote/ObjectTab}" /> 
+				</items>
+			</IconTabHeader>
+			
+			<l:VerticalLayout class='sapUiNoContentPadding' visible="{= ${mGlobal>/ChangeObjectTab} === 'order' &amp;&amp; ${mGlobal>/ChangeSettings/Order/ObjectTab} }" >
+				<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.ChangeDialog.Order" type="XML" id="OrderChangeDialog"/>
+			</l:VerticalLayout>
+			
+			<l:VerticalLayout class='sapUiNoContentPadding' visible="{= ${mGlobal>/ChangeObjectTab} === 'operation' &amp;&amp; ${mGlobal>/ChangeSettings/Operation/ObjectTab} }" >
+				<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.ChangeDialog.Operation" type="XML" id="OperationChangeDialog"/>
+			</l:VerticalLayout>
+			
+			<l:VerticalLayout class='sapUiNoContentPadding' visible="{= ${mGlobal>/ChangeObjectTab} === 'personalnote' &amp;&amp; ${mGlobal>/ChangeSettings/PersonalNote/ObjectTab} }" >
+				<core:Fragment fragmentName="com.blueboot.smartplanning.view.Fragments.ChangeDialog.PersonalNotes" type="XML" id="PersonalNotesChangeDialog"/>
+			</l:VerticalLayout>
+	
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

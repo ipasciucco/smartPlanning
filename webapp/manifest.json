@@ -1,0 +1,221 @@
+{
+    "_version": "1.12.0",
+    "sap.app": {
+        "id": "com.blueboot.smartplanning",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "sourceTemplate": {
+            "id": "servicecatalog.connectivityComponentForManifest",
+            "version": "0.0.0",
+            "toolsId": "23c7ae1c-2079-484d-be74-c3ee43056f76"
+        },
+        "dataSources": {
+            "PM_SRV": {
+                "uri": "/SAP_Gateway/sap/opu/odata/BLUEBOOT/PM_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "localUri": "localService/metadata.xml"
+                }
+            }         
+    },
+    "crossNavigation": {
+
+        "inbounds": {
+            "intent1": {
+                "signature": {
+                    "parameters": {},
+                    "additionalParameters": "allowed"
+                },
+                "semanticObject": "object",
+                "action": "display",
+                "title": "{{appTitle}}",
+                "subTitle": "{{appDescription}}",
+                "info": "",
+                "icon": "sap-icon://legend"
+            }
+        }
+        }
+    },
+    "sap.ui": {
+        "fullWidth": true,
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "componentUsages": {
+            "ComponentOrderDetails": {
+                "name": "com.blueboot.orderdetails",
+                "settings": {},
+                "componentData": {},
+                "lazy": true
+            }
+        },
+        "rootView": {
+            "viewName": "com.blueboot.smartplanning.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.65.6",
+            "libs": {
+                "sap.f": {},
+                "sap.m": {},
+                "sap.ui.comp": {
+                    "minVersion": ""
+                },
+                "sap.ui.core": {},
+                "sap.ui.layout": {
+                    "minVersion": ""
+                }
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.blueboot.smartplanning.i18n.i18n"
+                }
+            },
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "settings": {
+                    "defaultOperationMode": "Server",
+                    "defaultBindingMode": "OneWay",
+                    "defaultCountMode": "Request"
+                },
+                "dataSource": "PM_SRV",
+                "preload": true
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "com.blueboot.smartplanning.view",
+                "controlId": "app",
+                "controlAggregation": "pages",
+                "clearControlAggregation": false,
+                "async": true
+            },
+            "routes": [
+                {
+                    "name": "RouteWorklist",
+                    "pattern": "",
+                    "target": [
+                        "TargetWorklist"
+                    ]
+                },
+                {
+                    "name": "RouteGantt",
+                    "pattern": "Gantt",
+                    "target": [
+                        "TargetGantt"
+                    ]
+                },
+                {
+                    "name": "RouteKanban",
+                    "pattern": "Kanban/:Board::?query:",
+                    "target": [
+                        "TargetKanban"
+                    ]
+                },
+                {
+                    "name": "RouteOrderDetail",
+                    "pattern": "OrderDetail/{ID}",
+                    "target": [
+                        "TargetOrder"
+                    ]
+                },
+                {
+                    "name": "RouteNotificationDetail",
+                    "pattern": "NotificationDetail/{ID}",
+                    "target": [
+                        "TargetNotification"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetWorklist": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Worklist",
+                    "viewName": "Worklist"
+                },
+                "TargetGantt": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Gantt",
+                    "viewName": "Gantt"
+                },
+                "TargetKanban": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Kanban",
+                    "viewName": "Kanban"
+                },
+                "TargetOrder": {
+                    "type": "Component",
+                    "usage": "ComponentOrderDetails",
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false
+                },
+                "TargetNotification": {
+                    "type": "Component",
+                    "usage": "ComponentOrderDetails",
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false
+                }
+            }
+        },
+        "flexEnabled": true
+    },
+    "sap.platform.hcp": {
+        "uri": "webapp",
+        "_version": "1.1.0"
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "combluebootsmartplanning"
+    }
+}

@@ -1,0 +1,42 @@
+specVersion: "2.6"
+metadata:
+  name: com.blueboot.smartplanning
+type: application
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false
+        backend:
+          - path: /sap
+            url: https://web-logisticabackenddev.cfapps.us10.hana.ondemand.com/
+            destination: logisticaapi
+          - path: /SAP_Gateway
+            destination: logisticaapi
+            url: https://web-logisticabackenddev.cfapps.us10.hana.ondemand.com/
+            pathPrefix: /
+          - path: /sap/opu/odata/
+            destination: logisticaapi
+            url: https://web-logisticabackenddev.cfapps.us10.hana.ondemand.com/
+          - path: ECC/sap/bc/
+            destination: ECC
+            url: ""
+            pathPrefix: /sap/bc
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://ui5.sap.com
+          version: 1.112.3
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        component: com.blueboot.smartplanning
+        ui5Theme: sap_fiori_3
